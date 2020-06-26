@@ -5,6 +5,7 @@
 #include "ServerApp.h"
 
 #define MAXCLIENT 10
+#define NO_ERROR 0
 
 typedef struct socket_descr_e
 {
@@ -13,6 +14,6 @@ typedef struct socket_descr_e
 } socket_descr_t;
 
 int StartTCPServer(int port);
-int Accept(int server_fd);
+int Accept(int server);
 
 #endif
