@@ -1,5 +1,3 @@
-#include <stdlib.h>
-#include <string.h>
 #include "Logger.h"
 
 void CurrentTime();

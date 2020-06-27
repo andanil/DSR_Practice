@@ -8,21 +8,21 @@ void RunThreadApp(const char* ip, int socket)
 		Log(LOGGERFILENAME, "TCP_ERROR", "Read failed");
 		return;
 	}
-	switch(message->dataType)
+	switch(message->messageType)
 	{
-		case USERNAME:
+		case SINGIN:
 		{
-			printf("IP address: %s, username: %s\n", ip, message->data);
+			RegisterClient(socket, &message->user);
 			break;
 		}
-		case PASSWORD:
+		case LOGIN:
 		{
-			printf("IP address: %s, password: %s\n", ip, message->data);
+			LogIn(socket, &message->user);
 			break;
 		}
-		case COMMAND:
+		case SENDDATA:
 		{
-			printf("IP address: %s, command: %s\n", ip, message->data);
+			GetClientData(socket, &message->user);
 			break;
 		}
 	}

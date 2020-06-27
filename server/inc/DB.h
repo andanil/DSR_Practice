@@ -19,7 +19,7 @@
 static MYSQL* connection;
 
 int ConnectToDB();
-int InsertUserValue(const char* name, const char* password);
+int InsertUserValue(User* user);
 UserListNode* GetAllUsers();
 User* GetUserByName(const char* username);
 void CloseDB();

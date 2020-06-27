@@ -20,13 +20,13 @@ int ConnectToDB()
 	return 1;
 }
 
-int InsertUserValue(const char* name, const char* password)
+int InsertUserValue(User* user)
 {
 	char* query = (char*)malloc(MAXBUFFERSIZE*sizeof(char));
 	strcpy(query, "INSERT INTO Users(Name, Password) VALUES(\"");
-	strcat(query, name);
+	strcat(query, user->name);
 	strcat(query, "\",\"");
-	strcat(query, password);
+	strcat(query, user->password);
 	strcat(query, "\")");
 	if(mysql_query(connection, query))
 	{

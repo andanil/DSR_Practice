@@ -10,18 +10,16 @@
 #include <stddef.h>
 #include "User.h"
 
-#define MAXPACKETSIZE 300
-
-typedef enum data_type_e
+typedef enum
 {
-	USERNAME, PASSWORD, COMMAND 
+	SINGIN, LOGIN, SENDDATA, SUCCESS, ERROR  
 
-} data_type_t;
+} MessageType;
 
 typedef struct
 {
-	data_type_t dataType;
-	char data[MAXPACKETSIZE];
+	MessageType messageType;
+	User user;
 
 } Message;
 

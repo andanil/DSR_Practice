@@ -22,7 +22,7 @@ int main(int argc, char const *argv[])
         printf("Socket connection error \n"); 
         return 0;
     }
-
+   
     Message * message = (Message *)malloc(sizeof(Message));
     int run = 1;
     while(run)
@@ -47,8 +47,8 @@ int main(int argc, char const *argv[])
                         printf("Incorrect input\n");   
                         break;
                     }
-                    strcpy(message->data, name);
-                    message->dataType = USERNAME;
+                    //strcpy(message->user.name, name);
+                    //message->messageType = USERNAME;
                     Send(socket, message);
                     break;
                 }
@@ -61,8 +61,8 @@ int main(int argc, char const *argv[])
                         printf("Incorrect input\n");   
                         break;
                     }
-                    strcpy(message->data, pass);
-                    message->dataType = PASSWORD;
+                    //strcpy(message->user.name, pass);
+                    //message->messageType = PASSWORD;
                     Send(socket, message);
                     break;
                 }
@@ -75,8 +75,8 @@ int main(int argc, char const *argv[])
                         printf("Incorrect input\n");   
                         break;
                     }
-                    strcpy(message->data, com);
-                    message->dataType = COMMAND;
+                    //strcpy(message->user.name, com);
+                    //message->messageType = COMMAND;
                     Send(socket, message);
                     break;
                 }
