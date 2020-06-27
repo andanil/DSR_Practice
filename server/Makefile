@@ -1,19 +1,25 @@
-SRCS = TCPConnection.c ServerApp.c TCPServer.c
+SRCS = TCPConnection.c   Logger.c
 vpath %.c ../src
+OBJS = $(SRCS:.c=.o)
+
+SRCSAPP = ServerApp.c TCPServer.c DB.c UserList.c
+vpath %.c src
+OBJSAPP = $(SRCSAPP:.c=.o) 
+
 
 CFLAGS = -I../inc 
-
-OBJS = $(SRCS:.c=.o)
+CFLAGS += -Iinc 
+CFLAGS += -I/usr/include/mysql
 
 default: all
 
-all: $(OBJS) server
+all: $(OBJS) $(OBJSAPP) server
 
-server: server.o
-	gcc -pthread -std=c99 -o server server.o $(OBJS) 
+server: main.o
+	gcc -pthread -std=c99 -o server main.o $(OBJS) $(OBJSAPP) `mysql_config --cflags --libs`
 
-server.o: server.c
-	gcc -O -c -std=c99 server.c $(CFLAGS)
+main.o: main.c
+	gcc -O -c -std=c99 main.c $(CFLAGS)
 
 clean:
 	rm -f *.o

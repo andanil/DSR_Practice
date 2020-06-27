@@ -2,9 +2,12 @@
 
 void RunThreadApp(const char* ip, int socket)
 {
-	message_t* message = Read(socket);
+	Message* message = Read(socket);
 	if(message == NULL)
+	{
+		Log(LOGGERFILENAME, "TCP_ERROR", "Read failed");
 		return;
+	}
 	switch(message->dataType)
 	{
 		case USERNAME:

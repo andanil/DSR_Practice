@@ -3,7 +3,9 @@
 
 #include <stdio.h> 
 #include <stdlib.h> 
-#include "TCPServer.h"
+#include "TCPConnection.h"
+#include "ServerConf.h"
+#include "Logger.h"
 
 void RunThreadApp(const char* ip, int socket);
 

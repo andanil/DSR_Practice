@@ -1,19 +1,23 @@
-SRCS = TCPConnection.c TCPClient.c
+SRCS = TCPConnection.c  Logger.c
 vpath %.c ../src
+OBJS = $(SRCS:.c=.o)
+
+SRCSAPP = TCPClient.c
+vpath %.c src
+OBJSAPP = $(SRCSAPP:.c=.o)
 
 CFLAGS = -I../inc 
-
-OBJS = $(SRCS:.c=.o)
+CFLAGS += -Iinc 
 
 default: all
 
-all: $(OBJS) client
+all: $(OBJS) $(OBJSAPP) client
 
-client: client.o
-	gcc -std=c99 -o client client.o $(OBJS) 
+client: main.o
+	gcc -std=c99 -o client main.o $(OBJS) $(OBJSAPP) 
 
-client.o: client.c
-	gcc -O -c -std=c99 client.c $(CFLAGS)
+main.o: main.c
+	gcc -O -c -std=c99 main.c $(CFLAGS)
 
 clean:
 	rm -f *.o

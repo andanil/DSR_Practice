@@ -1,7 +1,7 @@
 #include <stdio.h> 
 #include <stdlib.h>
 #include <string.h>
-#include "../inc/TCPClient.h"
+#include "TCPClient.h"
    
 int main(int argc, char const *argv[]) 
 { 
@@ -10,6 +10,7 @@ int main(int argc, char const *argv[])
         printf("Arguments have been expected\n"); 
         return 0;
     }
+    Log(LOGGERFILENAME, "TCP_INFO", "TCP client initialization");
     printf("TCP client initialization\n"); 
     int socket = InitTCPClient(); 
     if(socket < 0)
@@ -22,7 +23,7 @@ int main(int argc, char const *argv[])
         return 0;
     }
 
-    message_t * message = (message_t *)malloc(sizeof(message_t));
+    Message * message = (Message *)malloc(sizeof(Message));
     int run = 1;
     while(run)
     {
@@ -40,7 +41,7 @@ int main(int argc, char const *argv[])
                 case 1:
                 {
                     printf("Username:\n");
-                    char name[MAXPACKETSIZE];
+                    char name[DATASIZE];
                     if(!scanf("%s", name)) 
                     {
                         printf("Incorrect input\n");   
@@ -54,7 +55,7 @@ int main(int argc, char const *argv[])
                 case 2:
                 {
                     printf("Password:\n");
-                    char pass[MAXPACKETSIZE];
+                    char pass[DATASIZE];
                     if(!scanf("%s", pass)) 
                     {
                         printf("Incorrect input\n");   
@@ -68,7 +69,7 @@ int main(int argc, char const *argv[])
                 case 3:
                 {
                     printf("Command:\n");
-                    char com[MAXPACKETSIZE];
+                    char com[DATASIZE];
                     if(!scanf("%s", com)) 
                     {
                         printf("Incorrect input\n");   

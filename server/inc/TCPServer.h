@@ -3,15 +3,16 @@
 
 #include "TCPConnection.h"
 #include "ServerApp.h"
+#include "ServerConf.h"
 
 #define MAXCLIENT 10
 #define NO_ERROR 0
 
-typedef struct socket_descr_e
+typedef struct
 {
     int socket;
     const char* ip;
-} socket_descr_t;
+} SocketDescr;
 
 int StartTCPServer(int port);
 int Accept(int server);

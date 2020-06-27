@@ -8,8 +8,9 @@
 #include <sys/socket.h> 
 #include <arpa/inet.h>
 #include <stddef.h>
+#include "User.h"
 
-#define MAXPACKETSIZE 1024
+#define MAXPACKETSIZE 300
 
 typedef enum data_type_e
 {
@@ -17,14 +18,14 @@ typedef enum data_type_e
 
 } data_type_t;
 
-typedef struct message_e
+typedef struct
 {
 	data_type_t dataType;
 	char data[MAXPACKETSIZE];
 
-} message_t;
+} Message;
 
-int Send(int socket, message_t* message);
-message_t* Read(int socket);
+int Send(int socket, Message* message);
+Message* Read(int socket);
 
 #endif
