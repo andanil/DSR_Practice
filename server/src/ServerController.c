@@ -1,29 +1,37 @@
 #include "ServerController.h"
 
-static Message message;
-static userID = -1;
+Message message;
+static int userID = -1;
 
 int CheckCorrectness(int socket, User* user);
 
-void RegisterClient(int socket, User* user)
+void RegisterClient(int socket, User* newUser)
 {
-	if(!CheckCorrectness(socket, user))
+	if(!CheckCorrectness(socket, newUser))
 		return;
 
-	User* userDB = GetUserByName(user->name);
+	if(!ConnectToDB())
+	{
+		Log(LOGGERFILENAME, "CONTR_ERROR", "Cannot connect to database");
+		return;
+	}
+
+	User* userDB = GetUserByName(newUser->name);
 	if(userDB != NULL)
 	{
 		Log(LOGGERFILENAME, "CONTR_ERROR", "Unavailable user name");
 		message.messageType = ERROR;
 		strcpy(message.user.name, "User with name ");
-		strcat(message.user.name, user->name);
-		strcat(message.user.name, "already exists");
+		strcat(message.user.name, userDB->name);
+		strcat(message.user.name, " already exists");
+		free(userDB);
 
 		if(!Send(socket, &message))
 			Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
 		return;
 	}
-	if(!InsertUserValue(user))
+	
+	if(!InsertUserValue(newUser))
 	{
 		Log(LOGGERFILENAME, "CONTR_ERROR", "Insert user failed");
 		message.messageType = ERROR;
@@ -33,17 +41,21 @@ void RegisterClient(int socket, User* user)
 			Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
 		return;
 	}
-	User* regUser = GetUserByName(user->name);
+
+	User* regUser = GetUserByName(newUser->name);
 	if(regUser != NULL)
 	{
 		userID = regUser->id;
 		Log(LOGGERFILENAME, "CONTR_INFO", "Registration completed successfully");
 		message.messageType = SUCCESS;
 		message.user = *regUser;
+		free(regUser);
+
 		if(!Send(socket, &message))
 			Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
 		return;
 	}
+
 	Log(LOGGERFILENAME, "CONTR_ERROR", "Registration failed");
 	message.messageType = ERROR;
 	strcpy(message.user.name, "Cannot find registered user");
@@ -53,33 +65,43 @@ void RegisterClient(int socket, User* user)
 	return;
 }
 
-void LogIn(int socket, User* user)
+void LogIn(int socket, User* client)
 {
-	if(!CheckCorrectness(socket, user))
+	if(!CheckCorrectness(socket, client))
 		return;
 
-	User* logUser = GetUserByName(user->name);
+	if(!ConnectToDB())
+	{
+		Log(LOGGERFILENAME, "CONTR_ERROR", "Cannot connect to database");
+		return;
+	}
+
+	User* logUser = GetUserByName(client->name);
 	if(logUser == NULL)
 	{
 		Log(LOGGERFILENAME, "CONTR_INFO", "Log in failed");
 		message.messageType = ERROR;
+		char name[DATASIZE];
+		strcpy(name, client->name);
 		strcpy(message.user.name, "No user with name ");
-		strcat(message.user.name, user->name);
+		strcat(message.user.name, name);
 
 		if(!Send(socket, &message))
 			Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
 		return;
 	}
-	if(strcmp(user->password, logUser->password) == 0)
+	if(strcmp(client->password, logUser->password) == 0)
 	{
 		userID = logUser->id;
 		Log(LOGGERFILENAME, "CONTR_INFO", "Log in completed successfully");
 		message.messageType = SUCCESS;
 		message.user = *logUser;
+		free(logUser);
 		if(!Send(socket, &message))
 			Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
 		return;
 	}
+	free(logUser);
 	Log(LOGGERFILENAME, "CONTR_INFO", "Log in failed");
 	message.messageType = ERROR;
 	strcpy(message.user.name, "Incorrect password");
@@ -89,9 +111,9 @@ void LogIn(int socket, User* user)
 	return;
 }
 
-void GetClientData(int socket, User* user)
+void GetClientData(int socket, User* client)
 {
-	if(userID != user->id)
+	if(userID != client->id)
 	{
 		Log(LOGGERFILENAME, "CONTR_INFO", "Get client data failed, incorrect id");
 		message.messageType = ERROR;
@@ -103,10 +125,9 @@ void GetClientData(int socket, User* user)
 	}
 
 	message.messageType = SUCCESS;
-	message.user = NULL;
 	if(!Send(socket, &message))
 		Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
-	
+
 	Log(LOGGERFILENAME, "CONTR_INFO", "Waiting data from user");
 }
 

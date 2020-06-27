@@ -2,7 +2,7 @@ SRCS = TCPConnection.c   Logger.c
 vpath %.c ../src
 OBJS = $(SRCS:.c=.o)
 
-SRCSAPP = ServerApp.c TCPServer.c DB.c UserList.c
+SRCSAPP =  ServerController.c ServerApp.c TCPServer.c DB.c UserList.c
 vpath %.c src
 OBJSAPP = $(SRCSAPP:.c=.o) 
 

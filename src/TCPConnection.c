@@ -1,6 +1,6 @@
 #include "TCPConnection.h"
 
-static Message message;
+Message message;
 
 int Send(int socket, Message* mess)
 {

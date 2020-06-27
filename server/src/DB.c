@@ -2,6 +2,8 @@
 
 int ConnectToDB()
 {
+	if(isConnected)
+		return 1;
 	connection = mysql_init(NULL);
 
 	if(connection == NULL) 
@@ -16,7 +18,7 @@ int ConnectToDB()
 		mysql_close(connection);
 	  	return 0;
 	}
-	
+	isConnected = 1;
 	return 1;
 }
 
@@ -74,8 +76,9 @@ UserListNode* GetAllUsers()
 User* GetUserByName(const char* username)
 {
 	char* query = (char*)malloc(MAXBUFFERSIZE*sizeof(char));
-	strcpy(query, "SELECT * FROM Users WHERE Name=");
+	strcpy(query, "SELECT * FROM Users WHERE Name=\"");
 	strcat(query, username);
+	strcat(query, "\"");
 
 	if(mysql_query(connection, query)) 
 	{
@@ -85,17 +88,22 @@ User* GetUserByName(const char* username)
 	}
 
 	free(query);
-	MYSQL_RES *result = mysql_store_result(connection);
 
+	MYSQL_RES *result = mysql_store_result(connection);
+	
   	if(result == NULL) 
 		return NULL;
 
-	MYSQL_ROW row = mysql_fetch_row(result);
+	MYSQL_ROW row;
+	User* user = NULL;
 
-	User* user = (User *)malloc(sizeof(User));
-	user->id = atoi(row[0]);
-	strcpy(user->name, row[1] ? row[1] : "NULL");
-	strcpy(user->password, row[2] ? row[2] : "NULL");
+	if((row = mysql_fetch_row(result)))
+	{
+		user = (User *)malloc(sizeof(User));
+		user->id = atoi(row[0]);
+		strcpy(user->name, row[1] ? row[1] : "NULL");
+		strcpy(user->password, row[2] ? row[2] : "NULL");
+	}
 
 	mysql_free_result(result);
 	return user;

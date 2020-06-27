@@ -12,17 +12,17 @@ void RunThreadApp(const char* ip, int socket)
 	{
 		case SINGIN:
 		{
-			RegisterClient(socket, &message->user);
+			RegisterClient(socket, &(message->user));
 			break;
 		}
 		case LOGIN:
 		{
-			LogIn(socket, &message->user);
+			LogIn(socket, &(message->user));
 			break;
 		}
 		case SENDDATA:
 		{
-			GetClientData(socket, &message->user);
+			GetClientData(socket, &(message->user));
 			break;
 		}
 	}

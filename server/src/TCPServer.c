@@ -69,7 +69,7 @@ int Accept(int server)
 		socketDescr->ip = inet_ntoa(address.sin_addr);
 		LogMessageWithIP("Client has been accepted, ip ", socketDescr->ip);
 
-		int running = 1;
+		int running = IsAvailableClient(socketDescr->socket);
 		while(running)
 		{
 			LogMessageWithIP("Client is available, ip ", socketDescr->ip);

@@ -5,8 +5,8 @@
 
 int main(int argc, char const *argv[]) 
 { 
-    int server_fd = StartTCPServer(8080);
-    if(server_fd < 0)
+    int server = StartTCPServer(8080);
+    if(server < 0)
     {
         printf("Can't start server\n");
         return 1;
@@ -14,9 +14,9 @@ int main(int argc, char const *argv[])
     
     while(1)
     {
-        if(!Accept(server_fd))
+        if(!Accept(server))
             printf("Accept failed\n");
     }
-    close(server_fd);
+    close(server);
     return 0; 
 } 

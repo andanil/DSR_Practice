@@ -14,9 +14,10 @@
 #define USER "gps_user"
 #define PASSWORD "userpswd"
 #define DATABASE "gps_db"
-#define MAXBUFFERSIZE 300
+#define MAXBUFFERSIZE 512
 
 static MYSQL* connection;
+static int isConnected = 0;
 
 int ConnectToDB();
 int InsertUserValue(User* user);
