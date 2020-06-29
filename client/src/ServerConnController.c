@@ -3,6 +3,8 @@
 Message message;
 extern User user;
 
+const char* Login(int socket);
+
 const char* Register(int socket, const char* name, const char* password, const char* confPassword)
 {
 	if(strcmp(password, confPassword) != 0)
@@ -34,22 +36,16 @@ const char* LogIn(int socket, const char* name, const char* password)
 	strcpy(user.password, password);
 	message.user = user;
 	message.messageType = LOGIN;
-	if(!Send(socket, &message))
-	{
-		Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
-		return "Cannot send data";
-	}
+	return Login(socket);	
+}
 
-	message = *Read(socket);
-	if(&message == NULL)
-	{
-		Log(LOGGERFILENAME, "TCP_ERROR", "Read failed");
-		return "Cannot receive data";
-	}
-	if(message.messageType == ERROR)
-		return message.user.name;
-	user = message.user;
-	return "Success";	
+const char* AutoLogIn(int socket)
+{
+	if(!ReadData(&user))
+		return "Read user info error";
+	message.user = user;
+	message.messageType = LOGIN;
+	return Login(socket);
 }
 
 const char* SendData(int socket)
@@ -71,4 +67,24 @@ const char* SendData(int socket)
 	if(message.messageType == ERROR)
 		return message.user.name;
 	return "Success";	
+}
+
+const char* Login(int socket)
+{
+	if(!Send(socket, &message))
+	{
+		Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
+		return "Cannot send data";
+	}
+
+	message = *Read(socket);
+	if(&message == NULL)
+	{
+		Log(LOGGERFILENAME, "TCP_ERROR", "Read failed");
+		return "Cannot receive data";
+	}
+	if(message.messageType == ERROR)
+		return message.user.name;
+	user = message.user;
+	return "Success";
 }
