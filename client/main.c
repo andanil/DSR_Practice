@@ -11,6 +11,5 @@ int main(int argc, char const *argv[])
     }
 
     RunApp(argv[1], 8080);
-
     return 0; 
 } 

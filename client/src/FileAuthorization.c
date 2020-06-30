@@ -14,7 +14,7 @@ int WriteData(User* user)
 	return 1;
 }
 
-int ReadData(User* user)
+int ReadUserData(User* user)
 {
 	FILE* file = fopen(AUTHFILENAME, "r");
 	if(file == NULL)

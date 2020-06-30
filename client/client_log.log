@@ -1,5 +1,21 @@
-2020-06-29 16:16:39 TCP_INFO TCP client initialization
-2020-06-29 16:16:39 TCP_INFO Connecting to server
-2020-06-29 16:16:41 SRVCON_INFO Registration completed successfully
-2020-06-29 16:16:46 SRVCON_INFO Sent data successfully
-2020-06-29 16:16:48 TCP_INFO TCP client closing
+2020-06-30 18:34:01 TCP_INFO TCP client initialization
+2020-06-30 18:34:01 TCP_INFO Connecting to server
+2020-06-30 18:34:04 SRVCON_INFO Authorization completed successfully
+2020-06-30 18:34:05 JSON_INFO Write data to json successfully
+2020-06-30 18:34:06 JSON_INFO Write data to json successfully
+2020-06-30 18:34:07 JSON_INFO Write data to json successfully
+2020-06-30 18:34:08 JSON_INFO Write data to json successfully
+2020-06-30 18:34:08 APP_INFO Set value True to sendToServer parameter
+2020-06-30 18:34:09 JSON_INFO Write data to json successfully
+2020-06-30 18:34:09 SRVCON_INFO Sent data successfully
+2020-06-30 18:34:10 JSON_INFO Write data to json successfully
+2020-06-30 18:34:10 SRVCON_INFO Sent data successfully
+2020-06-30 18:34:11 JSON_INFO Write data to json successfully
+2020-06-30 18:34:11 SRVCON_INFO Sent data successfully
+2020-06-30 18:34:12 JSON_INFO Write data to json successfully
+2020-06-30 18:34:12 SRVCON_INFO Sent data successfully
+2020-06-30 18:34:13 APP_INFO Set value False to sendToServer parameter
+2020-06-30 18:34:13 JSON_INFO Write data to json successfully
+2020-06-30 18:34:14 JSON_INFO Write data to json successfully
+2020-06-30 18:34:15 JSON_INFO Write data to json successfully
+2020-06-30 18:34:15 TCP_INFO TCP client closing

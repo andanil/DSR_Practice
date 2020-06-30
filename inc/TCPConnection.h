@@ -9,6 +9,7 @@
 #include <arpa/inet.h>
 #include <stddef.h>
 #include "User.h"
+#include "GPSInfo.h"
 
 typedef enum
 {
@@ -23,7 +24,17 @@ typedef struct
 
 } Message;
 
+typedef struct
+{
+	int userId;
+	GPSInfo data;
+
+} Data;
+
 int Send(int socket, Message* message);
 Message* Read(int socket);
+
+int SendData(int socket, Data* message);
+Data* ReadData(int socket);
 
 #endif

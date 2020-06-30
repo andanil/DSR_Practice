@@ -4,6 +4,7 @@ Message message;
 static int userID = -1;
 
 int CheckCorrectness(int socket, User* user);
+int CheckUserId(int id, int socket);
 
 void RegisterClient(int socket, User* newUser)
 {
@@ -113,22 +114,30 @@ void LogIn(int socket, User* client)
 
 void GetClientData(int socket, User* client)
 {
-	if(userID != client->id)
-	{
-		Log(LOGGERFILENAME, "CONTR_INFO", "Get client data failed, incorrect id");
-		message.messageType = ERROR;
-		strcpy(message.user.name, "Incorrect user id. You hasn't logged in yet");
-
-		if(!Send(socket, &message))
-			Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
+	if(!CheckUserId(client->id, socket))
 		return;
-	}
 
 	message.messageType = SUCCESS;
 	if(!Send(socket, &message))
 		Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
 
 	Log(LOGGERFILENAME, "CONTR_INFO", "Waiting data from user");
+
+	Data* userData = ReadData(socket);
+	if(userData == NULL)
+	{
+		Log(LOGGERFILENAME, "TCP_ERROR", "Read data failed");
+		return;
+	}
+	if(!CheckUserId(userData->userId, socket))
+		return;
+
+	message.messageType = SUCCESS;
+	if(!Send(socket, &message))
+		Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
+	Log(LOGGERFILENAME, "CONTR_INFO", "Get data from user successfully");
+
+	WriteDataToJsonFile(userData);
 }
 
 int CheckCorrectness(int socket, User* user)
@@ -138,6 +147,21 @@ int CheckCorrectness(int socket, User* user)
 		Log(LOGGERFILENAME, "CONTR_ERROR", "Incorrect user info");
 		message.messageType = ERROR;
 		message.user = *user;
+		if(!Send(socket, &message))
+			Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
+		return 0;
+	}
+	return 1;
+}
+
+int CheckUserId(int id, int socket)
+{
+	if(userID != id)
+	{
+		Log(LOGGERFILENAME, "CONTR_INFO", "Get client data failed, incorrect id");
+		message.messageType = ERROR;
+		strcpy(message.user.name, "Incorrect user id. You hasn't logged in yet");
+
 		if(!Send(socket, &message))
 			Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
 		return 0;

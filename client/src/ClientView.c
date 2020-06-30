@@ -1,6 +1,7 @@
 #include "ClientView.h"
 
-static int run;
+int run;
+int sendToServer;
 User user;
 
 void MainMenu(int socket);
@@ -8,37 +9,37 @@ void AuthMenu(int socket);
 void UnauthMenu(int socket);
 void RegisterView(int socket);
 void LogInView(int socket);
-void SendDataView(int socket);
 void SetAutoLogIn();
-void LogInResView(const char* res);
+void SettingsMenu();
+int LogInResView(const char* res, int socket);
 int GetInput(const char* message, char* data);
 
 void RunApp(const char* ip, int port)
 {
-	Log(LOGGERFILENAME, "TCP_INFO", "TCP client initialization");
+    Log(LOGGERFILENAME, "TCP_INFO", "TCP client initialization");
     int socket = InitTCPClient(); 
     if(socket < 0)
     {
-    	Log(LOGGERFILENAME, "TCP_ERROR", "Socket creation error");
-    	return;
+        Log(LOGGERFILENAME, "TCP_ERROR", "Socket creation error");
+        return;
     }
 
-	Log(LOGGERFILENAME, "TCP_INFO", "Connecting to server");
+    Log(LOGGERFILENAME, "TCP_INFO", "Connecting to server");
     if(!Connect(socket, port, ip))
     {
-    	Log(LOGGERFILENAME, "TCP_ERROR", "Socket connection error");
+        Log(LOGGERFILENAME, "TCP_ERROR", "Socket connection error");
         return;
     }
 
     user.id = -1;
-   
+    sendToServer = 0;
     run = 1;
+    
     while(run)
-    {
-    	MainMenu(socket);
-    }
+        MainMenu(socket);
 
     Log(LOGGERFILENAME, "TCP_INFO", "TCP client closing");
+    
     close(socket);
     return; 
 }
@@ -55,7 +56,7 @@ void AuthMenu(int socket)
 {
 	printf("\nYou have logged in as %s\n", user.name); 
 	printf("Choose command:\n"); 
-    printf("1.Send data\n"); 
+    printf("1.Settings\n"); 
     printf("2.Exit\n"); 
 
     int command;
@@ -65,7 +66,7 @@ void AuthMenu(int socket)
         {
             case 1:
             {
-             	SendDataView(socket);   
+             	SettingsMenu();   
                 break;
             }
             case 2:
@@ -104,7 +105,7 @@ void UnauthMenu(int socket)
             }
             case 3:
             {
-                LogInResView(AutoLogIn(socket));
+                LogInResView(AutoLogIn(socket), socket);
                 break;
             }
             case 4:
@@ -133,7 +134,15 @@ void RegisterView(int socket)
 		return;
 
     const char* res = Register(socket, name, password, confPassword);
-    
+    if(strcmp(res, "Success") != 0)
+    {
+        Log(LOGGERFILENAME, "SRVCON_ERROR", "Registration failed");
+        printf("%s\n", res);
+        return;
+    }
+    Log(LOGGERFILENAME, "SRVCON_INFO", "Registration completed successfully");
+    SetAutoLogIn();
+    RunDataSending(socket);
 }
 
 void LogInView(int socket)
@@ -146,21 +155,8 @@ void LogInView(int socket)
     if(!GetInput("Password:", password))
 		return;
 
-	LogInResView(LogIn(socket, name, password));
-    SetAutoLogIn();
-}
-
-void SendDataView(int socket)
-{
-	const char* res = SendData(socket);
-    if(strcmp(res, "Success") != 0)
-    {
-    	Log(LOGGERFILENAME, "SRVCON_ERROR", "Send data failed");
-    	printf("%s\n", res);
-        return;
-    }
-    printf("%s\n", "Sent data successfully");
-    Log(LOGGERFILENAME, "SRVCON_INFO", "Sent data successfully");
+	if(LogInResView(LogIn(socket, name, password), socket))
+        SetAutoLogIn();
 }
 
 void SetAutoLogIn()
@@ -188,15 +184,50 @@ void SetAutoLogIn()
 
 }
 
-void LogInResView(const char* res)
+void SettingsMenu()
+{
+    printf("\nSend data to server %s\n", sendToServer?"True":"False"); 
+    printf("Choose command\n"); 
+    printf("1.Change parameter\n"); 
+    printf("2.Exit\n"); 
+
+    int command;
+    if(scanf("%d", &command)) 
+    {
+        switch(command)
+        {
+            case 1:
+            {
+                sendToServer = !sendToServer;
+                char* mess = (char*)malloc(DATASIZE*sizeof(char));
+                strcpy(mess, "Set value ");
+                strcat(mess, sendToServer?"True":"False");
+                strcat(mess, " to sendToServer parameter");
+                Log(LOGGERFILENAME, "APP_INFO", mess);
+                free(mess);   
+                break;
+            }
+            case 2:
+            {
+                break;
+            }
+            default:
+                printf("Unknown command\n");
+        }
+    }
+}
+
+int LogInResView(const char* res, int socket)
 {
     if(strcmp(res, "Success") != 0)
     {
-        Log(LOGGERFILENAME, "SRVCON_ERROR", "Registration failed");
+        Log(LOGGERFILENAME, "SRVCON_ERROR", "Authorization failed");
         printf("%s\n", res);
-        return;
+        return 0;
     }
-    Log(LOGGERFILENAME, "SRVCON_INFO", "Registration completed successfully");
+    Log(LOGGERFILENAME, "SRVCON_INFO", "Authorization completed successfully");
+    RunDataSending(socket);
+    return 1;
 }
 
 int GetInput(const char* message, char* data)

@@ -5,6 +5,7 @@
 #include "ServerConf.h"
 #include "Logger.h"
 #include "DB.h"
+#include "JsonParser.h"
 
 void RegisterClient(int socket, User* newUser);
 void LogIn(int socket, User* client);

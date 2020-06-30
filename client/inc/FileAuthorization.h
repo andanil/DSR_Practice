@@ -6,6 +6,6 @@
 #include "Logger.h"
 
 int WriteData(User* user);
-int ReadData(User* user);
+int ReadUserData(User* user);
 
 #endif

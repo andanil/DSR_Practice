@@ -41,32 +41,59 @@ const char* LogIn(int socket, const char* name, const char* password)
 
 const char* AutoLogIn(int socket)
 {
-	if(!ReadData(&user))
+	if(!ReadUserData(&user))
 		return "Read user info error";
 	message.user = user;
 	message.messageType = LOGIN;
 	return Login(socket);
 }
 
-const char* SendData(int socket)
+int SendUserData(int socket, GPSInfo* data)
 {
 	message.user = user;
 	message.messageType = SENDDATA;
 	if(!Send(socket, &message))
 	{
 		Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
-		return "Cannot send data";
+		return 0;
 	}
 
 	message = *Read(socket);
 	if(&message == NULL)
 	{
 		Log(LOGGERFILENAME, "TCP_ERROR", "Read failed");
-		return "Cannot receive data";
+		return 0;
 	}
 	if(message.messageType == ERROR)
-		return message.user.name;
-	return "Success";	
+	{
+		Log(LOGGERFILENAME, "TCP_ERROR", message.user.name);
+		return 0;
+	}
+
+	Data* dataMessage = (Data*)malloc(sizeof(Data));
+	dataMessage->userId = user.id;
+	dataMessage->data = *data;
+	if(!SendData(socket, dataMessage))
+	{
+		free(dataMessage);
+		Log(LOGGERFILENAME, "TCP_ERROR", "Send data failed");
+		return 0;
+	}
+	free(dataMessage);
+
+	message = *Read(socket);
+	if(&message == NULL)
+	{
+		Log(LOGGERFILENAME, "TCP_ERROR", "Read failed");
+		return 0;
+	}
+	if(message.messageType == ERROR)
+	{
+		Log(LOGGERFILENAME, "TCP_ERROR", message.user.name);
+		return 0;
+	}
+	
+	return 1;	
 }
 
 const char* Login(int socket)

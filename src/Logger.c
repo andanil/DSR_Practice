@@ -1,7 +1,7 @@
 #include "Logger.h"
 
 void CurrentTime();
-static char buff[128];
+char buff[128];
 
 void Log(const char* filename, const char* status, const char* message)
 {
