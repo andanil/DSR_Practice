@@ -1,8 +1,8 @@
-SRCS = TCPConnection.c   Logger.c
+SRCS = TCPConnection.c  Logger.c JsonParser.c
 vpath %.c ../src
 OBJS = $(SRCS:.c=.o)
 
-SRCSAPP =  JsonParser.c ServerController.c ServerApp.c TCPServer.c DB.c UserList.c
+SRCSAPP = ServerController.c ServerApp.c TCPServer.c DB.c UserList.c
 vpath %.c src
 OBJSAPP = $(SRCSAPP:.c=.o) 
 

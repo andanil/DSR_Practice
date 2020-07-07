@@ -9,6 +9,6 @@
 
 void RegisterClient(int socket, User* newUser);
 void LogIn(int socket, User* client);
-void GetClientData(int socket, User* client);
+void GetClientData(int socket, Data* data);
 
 #endif

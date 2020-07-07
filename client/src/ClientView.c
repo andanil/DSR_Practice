@@ -30,6 +30,7 @@ void RunApp(const char* ip, int port)
         Log(LOGGERFILENAME, "TCP_ERROR", "Socket connection error");
         return;
     }
+    Log(LOGGERFILENAME, "TCP_INFO", "Connect to server successfully");
 
     user.id = -1;
     sendToServer = 0;
@@ -54,7 +55,7 @@ void MainMenu(int socket)
 
 void AuthMenu(int socket)
 {
-	printf("\nYou have logged in as %s\n", user.name); 
+	printf("\nYou have logged in as %s\n", user.login); 
 	printf("Choose command:\n"); 
     printf("1.Settings\n"); 
     printf("2.Exit\n"); 
@@ -161,7 +162,7 @@ void LogInView(int socket)
 
 void SetAutoLogIn()
 {
-    printf("Make %s an auto login user? (y/n)\n", user.name);
+    printf("Make %s an auto login user? (y/n)\n", user.login);
     char answer;
     if(scanf("%s", &answer)) 
     {

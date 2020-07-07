@@ -6,7 +6,7 @@
 typedef struct
 {
 	int id;
-	char name[DATASIZE];
+	char login[DATASIZE];
 	char password [DATASIZE];
 }User;
 

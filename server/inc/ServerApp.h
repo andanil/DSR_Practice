@@ -7,6 +7,7 @@
 #include "ServerConf.h"
 #include "Logger.h"
 #include "ServerController.h"
+#include "JsonParser.h"
 
 void RunThreadApp(const char* ip, int socket);
 

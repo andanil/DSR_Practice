@@ -26,7 +26,7 @@ int InsertUserValue(User* user)
 {
 	char* query = (char*)malloc(MAXBUFFERSIZE*sizeof(char));
 	strcpy(query, "INSERT INTO Users(Name, Password) VALUES(\"");
-	strcat(query, user->name);
+	strcat(query, user->login);
 	strcat(query, "\",\"");
 	strcat(query, user->password);
 	strcat(query, "\")");
@@ -62,7 +62,7 @@ UserListNode* GetAllUsers()
 	{
 		User* user = (User *)malloc(sizeof(User)); 
 		user->id = atoi(row[0]);
-		strcpy(user->name, row[1] ? row[1] : "NULL");
+		strcpy(user->login, row[1] ? row[1] : "NULL");
 		strcpy(user->password, row[2] ? row[2] : "NULL");
 		head = Add(head, user);
 	}
@@ -101,7 +101,7 @@ User* GetUserByName(const char* username)
 	{
 		user = (User *)malloc(sizeof(User));
 		user->id = atoi(row[0]);
-		strcpy(user->name, row[1] ? row[1] : "NULL");
+		strcpy(user->login, row[1] ? row[1] : "NULL");
 		strcpy(user->password, row[2] ? row[2] : "NULL");
 	}
 

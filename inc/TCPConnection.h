@@ -11,18 +11,13 @@
 #include "User.h"
 #include "GPSInfo.h"
 
+#define MAXMESSAGESIZE 1024
+
 typedef enum
 {
-	SINGIN, LOGIN, SENDDATA, SUCCESS, ERROR  
+	SINGIN, LOGIN, DATA, SUCCESS, ERROR  
 
 } MessageType;
-
-typedef struct
-{
-	MessageType messageType;
-	User user;
-
-} Message;
 
 typedef struct
 {
@@ -31,10 +26,7 @@ typedef struct
 
 } Data;
 
-int Send(int socket, Message* message);
-Message* Read(int socket);
-
-int SendData(int socket, Data* message);
-Data* ReadData(int socket);
+int Send(int socket, const char* message);
+const char* Read(int socket);
 
 #endif

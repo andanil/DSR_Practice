@@ -2,27 +2,27 @@
 
 void RunThreadApp(const char* ip, int socket)
 {
-	Message* message = Read(socket);
+	const char* message = Read(socket);
 	if(message == NULL)
 	{
 		Log(LOGGERFILENAME, "TCP_ERROR", "Read failed");
 		return;
 	}
-	switch(message->messageType)
+	switch(JsonGetMessageType(message))
 	{
 		case SINGIN:
 		{
-			RegisterClient(socket, &(message->user));
+			RegisterClient(socket, JsonGetUser(message));
 			break;
 		}
 		case LOGIN:
 		{
-			LogIn(socket, &(message->user));
+			LogIn(socket, JsonGetUser(message));
 			break;
 		}
-		case SENDDATA:
+		case DATA:
 		{
-			GetClientData(socket, &(message->user));
+			GetClientData(socket, JsonGetData(message));
 			break;
 		}
 	}

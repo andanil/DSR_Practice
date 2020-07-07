@@ -1,8 +1,8 @@
-SRCS = TCPConnection.c  Logger.c
+SRCS = TCPConnection.c  Logger.c JsonParser.c
 vpath %.c ../src
 OBJS = $(SRCS:.c=.o)
 
-SRCSAPP = NMEAGenerator.c NMEAParser.c JsonParser.c TCPClient.c FileAuthorization.c ServerConnController.c ClientDataController.c ClientView.c
+SRCSAPP = NMEAGenerator.c NMEAParser.c TCPClient.c FileAuthorization.c ServerConnController.c ClientDataController.c ClientView.c
 vpath %.c src
 OBJSAPP = $(SRCSAPP:.c=.o)
 

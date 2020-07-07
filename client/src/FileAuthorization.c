@@ -8,7 +8,7 @@ int WriteData(User* user)
 		Log(LOGGERFILENAME, "AUTH_ERROR", "Open file error");
 		return 0;
 	}
-	fprintf(file, "%s<===>%s", user->name, user->password);
+	fprintf(file, "%s<===>%s", user->login, user->password);
 	fclose(file);
 	Log(LOGGERFILENAME, "AUTH_INFO", "Write new user info");
 	return 1;
@@ -38,7 +38,7 @@ int ReadUserData(User* user)
 	 	p = strtok(data, "<===>");
 	 	if(!p)
 	 		break;
-	 	strcpy(user->name, p);
+	 	strcpy(user->login, p);
 	 	p = strtok(NULL, "<===>");
 	 	if(!p)
 	 		break;

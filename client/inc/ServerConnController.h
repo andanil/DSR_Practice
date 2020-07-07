@@ -8,9 +8,10 @@
 #include "Logger.h"
 #include "FileAuthorization.h"
 #include "Logger.h"
+#include "JsonParser.h"
 
-const char* Register(int socket, const char* name, const char* password, const char* confPassword);
-const char* LogIn(int socket, const char* name, const char* password);
+const char* Register(int socket, const char* login, const char* password, const char* confPassword);
+const char* LogIn(int socket, const char* login, const char* password);
 const char* AutoLogIn(int socket);
 int SendUserData(int socket, GPSInfo* data);
 

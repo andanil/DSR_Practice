@@ -1,21 +1,17 @@
-2020-06-30 18:33:58 TCP_INFO Server listening
-2020-06-30 18:34:01 TCP_INFO Client has been accepted, ip 127.0.0.1
-2020-06-30 18:34:04 TCP_INFO Client is available, ip 127.0.0.1
-2020-06-30 18:34:04 CONTR_INFO Log in completed successfully
-2020-06-30 18:34:09 TCP_INFO Client is available, ip 127.0.0.1
-2020-06-30 18:34:09 CONTR_INFO Waiting data from user
-2020-06-30 18:34:09 CONTR_INFO Get data from user successfully
-2020-06-30 18:34:09 JSON_INFO Write data to json successfully
-2020-06-30 18:34:10 TCP_INFO Client is available, ip 127.0.0.1
-2020-06-30 18:34:10 CONTR_INFO Waiting data from user
-2020-06-30 18:34:10 CONTR_INFO Get data from user successfully
-2020-06-30 18:34:10 JSON_INFO Write data to json successfully
-2020-06-30 18:34:11 TCP_INFO Client is available, ip 127.0.0.1
-2020-06-30 18:34:11 CONTR_INFO Waiting data from user
-2020-06-30 18:34:11 CONTR_INFO Get data from user successfully
-2020-06-30 18:34:11 JSON_INFO Write data to json successfully
-2020-06-30 18:34:12 TCP_INFO Client is available, ip 127.0.0.1
-2020-06-30 18:34:12 CONTR_INFO Waiting data from user
-2020-06-30 18:34:12 CONTR_INFO Get data from user successfully
-2020-06-30 18:34:12 JSON_INFO Write data to json successfully
-2020-06-30 18:34:16 TCP_INFO Client is not available, ip 127.0.0.1
+2020-07-07 12:23:04 TCP_INFO Server listening
+2020-07-07 12:23:06 TCP_INFO Client has been accepted, ip 127.0.0.1
+2020-07-07 12:23:08 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-07 12:23:08 CONTR_INFO Log in completed successfully
+2020-07-07 12:23:12 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-07 12:23:12 CONTR_INFO Get data from user successfully
+2020-07-07 12:23:13 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-07 12:23:13 CONTR_INFO Get data from user successfully
+2020-07-07 12:23:14 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-07 12:23:14 CONTR_INFO Get data from user successfully
+2020-07-07 12:23:15 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-07 12:23:15 CONTR_INFO Get data from user successfully
+2020-07-07 12:23:16 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-07 12:23:16 CONTR_INFO Get data from user successfully
+2020-07-07 12:23:17 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-07 12:23:17 CONTR_INFO Get data from user successfully
+2020-07-07 12:23:20 TCP_INFO Client is not available, ip 127.0.0.1
