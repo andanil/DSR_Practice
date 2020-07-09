@@ -14,13 +14,13 @@ int Connect(int socket, int port, const char* address)
     if(inet_pton(AF_INET, address, &addr.sin_addr)<=0)  
     { 
         Log(LOGGERFILENAME, "TCP_ERROR", "Incorrect address");
-        return 0; 
+        return RET_ERROR; 
     } 
    
     if (connect(socket, (struct sockaddr *)&addr, sizeof(addr)) < 0) 
     {
         Log(LOGGERFILENAME, "TCP_ERROR", "Connect failed"); 
-        return 0; 
+        return RET_ERROR; 
     }
-    return 1;
+    return RET_OK;
 }

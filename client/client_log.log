@@ -1,24 +1,29 @@
-2020-07-07 12:23:06 TCP_INFO TCP client initialization
-2020-07-07 12:23:06 TCP_INFO Connecting to server
-2020-07-07 12:23:06 TCP_INFO Connect to server successfully
-2020-07-07 12:23:08 SRVCON_INFO Authorization completed successfully
-2020-07-07 12:23:09 JSON_INFO Write data to json successfully
-2020-07-07 12:23:10 JSON_INFO Write data to json successfully
-2020-07-07 12:23:11 JSON_INFO Write data to json successfully
-2020-07-07 12:23:12 APP_INFO Set value True to sendToServer parameter
-2020-07-07 12:23:12 JSON_INFO Write data to json successfully
-2020-07-07 12:23:12 SRVCON_INFO Sent data successfully
-2020-07-07 12:23:13 JSON_INFO Write data to json successfully
-2020-07-07 12:23:13 SRVCON_INFO Sent data successfully
-2020-07-07 12:23:14 JSON_INFO Write data to json successfully
-2020-07-07 12:23:14 SRVCON_INFO Sent data successfully
-2020-07-07 12:23:15 JSON_INFO Write data to json successfully
-2020-07-07 12:23:15 SRVCON_INFO Sent data successfully
-2020-07-07 12:23:16 JSON_INFO Write data to json successfully
-2020-07-07 12:23:16 SRVCON_INFO Sent data successfully
-2020-07-07 12:23:17 JSON_INFO Write data to json successfully
-2020-07-07 12:23:17 SRVCON_INFO Sent data successfully
-2020-07-07 12:23:18 APP_INFO Set value False to sendToServer parameter
-2020-07-07 12:23:18 JSON_INFO Write data to json successfully
-2020-07-07 12:23:19 JSON_INFO Write data to json successfully
-2020-07-07 12:23:20 TCP_INFO TCP client closing
+2020-07-09 10:03:48 TCP_INFO TCP client initialization
+2020-07-09 10:03:48 TCP_INFO Connecting to server
+2020-07-09 10:03:48 TCP_INFO Connect to server successfully
+2020-07-09 10:08:02 TCP_INFO TCP client initialization
+2020-07-09 10:08:02 TCP_INFO Connecting to server
+2020-07-09 10:08:02 TCP_INFO Connect to server successfully
+2020-07-09 10:08:04 SRVCON_INFO Authorization completed successfully
+2020-07-09 10:08:05 JSON_INFO Write data to json successfully
+2020-07-09 10:08:06 JSON_INFO Write data to json successfully
+2020-07-09 10:08:07 JSON_INFO Write data to json successfully
+2020-07-09 10:08:08 JSON_INFO Write data to json successfully
+2020-07-09 10:08:09 JSON_INFO Write data to json successfully
+2020-07-09 10:08:10 JSON_INFO Write data to json successfully
+2020-07-09 10:08:11 APP_INFO Set value True to sendToServer parameter
+2020-07-09 10:08:11 JSON_INFO Write data to json successfully
+2020-07-09 10:08:11 SRVCON_INFO Sent data successfully
+2020-07-09 10:08:12 JSON_INFO Write data to json successfully
+2020-07-09 10:08:12 SRVCON_INFO Sent data successfully
+2020-07-09 10:08:13 JSON_INFO Write data to json successfully
+2020-07-09 10:08:13 SRVCON_INFO Sent data successfully
+2020-07-09 10:08:14 JSON_INFO Write data to json successfully
+2020-07-09 10:08:14 SRVCON_INFO Sent data successfully
+2020-07-09 10:08:15 JSON_INFO Write data to json successfully
+2020-07-09 10:08:15 SRVCON_INFO Sent data successfully
+2020-07-09 10:08:16 APP_INFO Set value False to sendToServer parameter
+2020-07-09 10:08:16 JSON_INFO Write data to json successfully
+2020-07-09 10:08:17 JSON_INFO Write data to json successfully
+2020-07-09 10:08:18 JSON_INFO Write data to json successfully
+2020-07-09 10:08:19 TCP_INFO TCP client closing

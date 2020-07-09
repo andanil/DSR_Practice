@@ -3,27 +3,28 @@
 int ConnectToDB()
 {
 	if(isConnected)
-		return 1;
+		return RET_OK;
 	connection = mysql_init(NULL);
 
 	if(connection == NULL) 
 	{
 		Log(LOGGERFILENAME, "SQL_ERROR", mysql_error(connection));
-		return 0;
+		return RET_ERROR;
 	}
 
 	if(mysql_real_connect(connection, SERVER, USER, PASSWORD, DATABASE, 0, NULL, 0) == NULL) 
 	{
 		Log(LOGGERFILENAME, "SQL_ERROR", mysql_error(connection));
 		mysql_close(connection);
-	  	return 0;
+	  	return RET_ERROR;
 	}
 	isConnected = 1;
-	return 1;
+	return RET_OK;
 }
 
 int InsertUserValue(User* user)
 {
+	ret_t ret = RET_OK;
 	char* query = (char*)malloc(MAXBUFFERSIZE*sizeof(char));
 	strcpy(query, "INSERT INTO Users(Name, Password) VALUES(\"");
 	strcat(query, user->login);
@@ -32,12 +33,11 @@ int InsertUserValue(User* user)
 	strcat(query, "\")");
 	if(mysql_query(connection, query))
 	{
-		free(query);
 		Log(LOGGERFILENAME, "SQL_ERROR", mysql_error(connection));
-		return 0;
+		ret = RET_ERROR;
 	}
 	free(query);
-	return 1;
+	return ret;
 }
 
 UserListNode* GetAllUsers()

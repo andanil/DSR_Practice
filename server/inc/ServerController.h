@@ -7,8 +7,10 @@
 #include "DB.h"
 #include "JsonParser.h"
 
-void RegisterClient(int socket, User* newUser);
-void LogIn(int socket, User* client);
-void GetClientData(int socket, Data* data);
+#define ERRORMESSAGESIZE 128
+
+void RegisterClient(int socket, const char* message);
+void LogIn(int socket, const char* message);
+void GetClientData(int socket, const char* message);
 
 #endif

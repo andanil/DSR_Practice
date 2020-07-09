@@ -11,7 +11,7 @@ const char* Register(int socket, const char* login, const char* password, const 
 	strcpy(user.login, login);
 	strcpy(user.password, password);
 
-	if(!Send(socket, JsonSendUser(SINGIN, &user)))
+	if(Send(socket, JsonSendUser(SINGIN, &user)) == RET_ERROR)
 	{
 		Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
 		return "Cannot send data";
@@ -24,7 +24,14 @@ const char* Register(int socket, const char* login, const char* password, const 
 	}
 	if(JsonGetMessageType(message) == ERROR)
 		return JsonGetErrorMessage(message);
+
 	user = *JsonGetUser(message);
+	if(&user == NULL)
+	{	
+        Log(LOGGERFILENAME, "JSON_ERROR", "Parse user failed");
+		return "Cannot receive user info";
+	}
+	
 	return "Success";	
 }
 
@@ -44,30 +51,30 @@ const char* AutoLogIn(int socket)
 
 int SendUserData(int socket, GPSInfo* data)
 {
-	if(!Send(socket, JsonSendGPSInfo(DATA, user.id, data)))
+	if(Send(socket, JsonSendGPSInfo(DATA, user.id, data)) == RET_ERROR)
 	{
 		Log(LOGGERFILENAME, "TCP_ERROR", "Send data failed");
-		return 0;
+		return RET_ERROR;
 	}
 
 	const char* message = Read(socket);
 	if(message == NULL)
 	{
 		Log(LOGGERFILENAME, "TCP_ERROR", "Read failed");
-		return 0;
+		return RET_ERROR;
 	}
 	if(JsonGetMessageType(message) == ERROR)
 	{
 		Log(LOGGERFILENAME, "TCP_ERROR", JsonGetErrorMessage(message));
-		return 0;
+		return RET_ERROR;
 	}
 	
-	return 1;	
+	return RET_OK;	
 }
 
 const char* Login(int socket)
 {
-	if(!Send(socket, JsonSendUser(LOGIN, &user)))
+	if(Send(socket, JsonSendUser(LOGIN, &user)) == RET_ERROR)
 	{
 		Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
 		return "Cannot send data";
@@ -82,5 +89,10 @@ const char* Login(int socket)
 	if(JsonGetMessageType(message) == ERROR)
 		return JsonGetErrorMessage(message);
 	user = *JsonGetUser(message);
+	if(&user == NULL)
+	{	
+        Log(LOGGERFILENAME, "JSON_ERROR", "Parse user failed");
+		return "Cannot receive user info";
+	}
 	return "Success";
 }

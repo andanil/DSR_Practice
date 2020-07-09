@@ -7,32 +7,41 @@ void AddGPSInfoToObj(json_object* jobj, GPSInfo* data);
 
 int JsonWriteGPSInfo(const char* filename, GPSInfo* data)
 {
+	ret_t ret = RET_OK;
 	FILE *file = fopen(filename, "a");
+
 	if(file == NULL)
-		return 0;
+		ret = RET_ERROR;
+	else
+	{
+		json_object* jobj = json_object_new_object();
+		AddGPSInfoToObj(jobj, data);
 
-	json_object* jobj = json_object_new_object();
-	AddGPSInfoToObj(jobj, data);
+		fprintf(file, "%s\n", json_object_to_json_string(jobj));
+		fclose(file);
+	}
 
-	fprintf(file, "%s\n", json_object_to_json_string(jobj));
-	fclose(file);
-	return 1;
+	return ret;
 }
 
 int JsonWriteGPSInfoWithId(const char* filename, Data* data)
 {
+	ret_t ret = RET_OK;
 	FILE *file = fopen(filename, "a");
 	if(file == NULL)
-		return 0;
+		ret = RET_ERROR;
+	else
+	{
+		json_object* jobj = json_object_new_object();
+		json_object* jid = json_object_new_int(data->userId);
+		json_object_object_add(jobj,"UserId", jid);
+		AddGPSInfoToObj(jobj, &data->data);
 
-	json_object* jobj = json_object_new_object();
-	json_object* jid = json_object_new_int(data->userId);
-	json_object_object_add(jobj,"UserId", jid);
-	AddGPSInfoToObj(jobj, &data->data);
-
-	fprintf(file, "%s\n", json_object_to_json_string(jobj));
-	fclose(file);
-	return 1;
+		fprintf(file, "%s\n", json_object_to_json_string(jobj));
+		fclose(file);	
+	}
+	
+	return ret;
 }
 
 const char* JsonSendGPSInfo(MessageType messageType, int id, GPSInfo* data)

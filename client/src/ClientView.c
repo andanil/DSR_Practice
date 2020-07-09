@@ -25,7 +25,7 @@ void RunApp(const char* ip, int port)
     }
 
     Log(LOGGERFILENAME, "TCP_INFO", "Connecting to server");
-    if(!Connect(socket, port, ip))
+    if(Connect(socket, port, ip) == RET_ERROR)
     {
         Log(LOGGERFILENAME, "TCP_ERROR", "Socket connection error");
         return;
@@ -65,12 +65,12 @@ void AuthMenu(int socket)
     {
         switch(command)
         {
-            case 1:
+            case SETTINGS:
             {
              	SettingsMenu();   
                 break;
             }
-            case 2:
+            case EXIT:
             {
                 run = 0;
                 break;
@@ -94,22 +94,22 @@ void UnauthMenu(int socket)
     {
         switch(command)
         {
-            case 1:
+            case REGISTER_USER:
             {
              	RegisterView(socket);   
                 break;
             }
-            case 2:
+            case LOG_IN:
             {
                 LogInView(socket);
                 break;
             }
-            case 3:
+            case AUTO_LOG_IN:
             {
                 LogInResView(AutoLogIn(socket), socket);
                 break;
             }
-            case 4:
+            case EXIT_PROG:
             {
                 run = 0;
                 break;
@@ -123,15 +123,15 @@ void UnauthMenu(int socket)
 void RegisterView(int socket)
 {
     char name[DATASIZE];
-	if(!GetInput("Username:", name))
+	if(GetInput("Username:", name) == RET_ERROR)
 		return;
 
     char password[DATASIZE];
-    if(!GetInput("Password:", password))
+    if(GetInput("Password:", password) == RET_ERROR)
 		return;
 
 	char confPassword[DATASIZE];
-    if(!GetInput("Confirm password:", confPassword))
+    if(GetInput("Confirm password:", confPassword) == RET_ERROR)
 		return;
 
     const char* res = Register(socket, name, password, confPassword);
@@ -149,14 +149,14 @@ void RegisterView(int socket)
 void LogInView(int socket)
 {
 	char name[DATASIZE];
-	if(!GetInput("Username:", name))
+	if(GetInput("Username:", name) == RET_ERROR)
 		return;
 
     char password[DATASIZE];
-    if(!GetInput("Password:", password))
+    if(GetInput("Password:", password) == RET_ERROR)
 		return;
 
-	if(LogInResView(LogIn(socket, name, password), socket))
+	if(LogInResView(LogIn(socket, name, password), socket) == RET_OK)
         SetAutoLogIn();
 }
 
@@ -197,7 +197,7 @@ void SettingsMenu()
     {
         switch(command)
         {
-            case 1:
+            case CHANGE:
             {
                 sendToServer = !sendToServer;
                 char* mess = (char*)malloc(DATASIZE*sizeof(char));
@@ -208,7 +208,7 @@ void SettingsMenu()
                 free(mess);   
                 break;
             }
-            case 2:
+            case EXIT_MENU:
             {
                 break;
             }
@@ -224,22 +224,23 @@ int LogInResView(const char* res, int socket)
     {
         Log(LOGGERFILENAME, "SRVCON_ERROR", "Authorization failed");
         printf("%s\n", res);
-        return 0;
+        return RET_ERROR;
     }
     Log(LOGGERFILENAME, "SRVCON_INFO", "Authorization completed successfully");
     RunDataSending(socket);
-    return 1;
+    return RET_OK;
 }
 
 int GetInput(const char* message, char* data)
 {
+    ret_t ret = RET_OK;
     char temp;
     scanf("%c",&temp); 
 	printf("%s\n", message);
     if(!scanf("%[^\n]", data))
     {
         printf("Incorrect input\n");   
-        return 0;
+        ret = RET_ERROR;
     }
-    return 1;
+    return ret;
 }

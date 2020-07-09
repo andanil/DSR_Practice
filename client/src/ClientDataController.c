@@ -46,14 +46,14 @@ void *DataSendingHandler(void *ptr)
 				char message[NMEAMESSAGESIZE];
 				read(fd[0], message, NMEAMESSAGESIZE);
 				GPSInfo* data = ParseRMCString(message);
-    			if(!JsonWriteGPSInfo(JSONFILENAME, data))
+    			if(JsonWriteGPSInfo(JSONFILENAME, data) == RET_ERROR)
     				Log(LOGGERFILENAME, "JSON_ERROR", "Write data to json failed");
     			else
     				Log(LOGGERFILENAME, "JSON_INFO", "Write data to json successfully");
     			
     			if(sendToServer)
     			{
-				    if(SendUserData(socket, data))
+				    if(SendUserData(socket, data) == RET_OK)
 				    	Log(LOGGERFILENAME, "SRVCON_INFO", "Sent data successfully");
     			}
 			}

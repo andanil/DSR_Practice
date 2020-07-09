@@ -3,142 +3,199 @@
 static int userID = -1;
 
 int CheckCorrectness(int socket, User* user);
-int CheckUserId(int id, int socket);
 
-void RegisterClient(int socket, User* newUser)
+void RegisterClient(int socket, const char* message)
 {
-	if(!CheckCorrectness(socket, newUser))
-		return;
+	char sendMessage[MAXMESSAGESIZE];
+	char errorMessage[ERRORMESSAGESIZE];
 
-	if(!ConnectToDB())
-	{
-		Log(LOGGERFILENAME, "CONTR_ERROR", "Cannot connect to database");
-		return;
-	}
+	ret_t ret = RET_OK;
+    do
+    {
+    	ret = ConnectToDB();
+    	if(ret == RET_ERROR)
+		{
+			strcpy(errorMessage, "Cannot connect to database");
+    		strcpy(sendMessage, "Cannot register user");
+			break; 
+		}
 
-	User* userDB = GetUserByName(newUser->login);
-	if(userDB != NULL)
-	{
-		Log(LOGGERFILENAME, "CONTR_ERROR", "Unavailable user name");
+    	User* newUser = JsonGetUser(message);
+    	if(newUser == NULL)
+    	{
+    		strcpy(errorMessage, "Parse user failed");
+    		strcpy(sendMessage, "Cannot get user data");
+			ret = RET_ERROR;
+			break; 
+    	}
+    	ret = CheckCorrectness(socket, newUser);
+		if(ret == RET_ERROR)
+		{
+			strcpy(errorMessage, "Incorrect user info");
+    		strcpy(sendMessage, "Incorrect user info");
+			break; 
+		}
 
-		char message[MAXMESSAGESIZE];
-		strcpy(message, "User with name ");
-		strcat(message, userDB->login);
-		strcat(message, " already exists");
-		free(userDB);
+		User* userDB = GetUserByName(newUser->login);
+		if(userDB != NULL)
+		{
+			strcpy(errorMessage, "Unavailable user name");
+			
+			strcpy(sendMessage, "User with name ");
+			strcat(sendMessage, userDB->login);
+			strcat(sendMessage, " already exists");
 
-		if(!Send(socket, JsonSendErrorMessage(ERROR, message)))
-			Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
-		return;
-	}
-	
-	if(!InsertUserValue(newUser))
-	{
-		Log(LOGGERFILENAME, "CONTR_ERROR", "Insert user failed");
+			free(userDB);
+			ret = RET_ERROR;
+			break;
+		}
+		
+		ret = InsertUserValue(newUser);
+		if(ret == RET_ERROR)
+		{
+			strcpy(errorMessage, "Insert user failed");
+			strcpy(sendMessage, "Cannot register user");
+			ret = RET_ERROR;
+			break;
+		}
 
-		if(!Send(socket, JsonSendErrorMessage(ERROR, "Cannot register user")))
-			Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
-		return;
-	}
+		User* regUser = GetUserByName(newUser->login);
+		if(regUser == NULL)
+		{
+			strcpy(errorMessage, "Registration failed");
+			strcpy(sendMessage, "Cannot find registered user");
+			ret = RET_ERROR;
+			break;
+		}
 
-	User* regUser = GetUserByName(newUser->login);
-	if(regUser != NULL)
-	{
 		userID = regUser->id;
 		Log(LOGGERFILENAME, "CONTR_INFO", "Registration completed successfully");
 
-		if(!Send(socket, JsonSendUser(SUCCESS, regUser)))
+		if(Send(socket, JsonSendUser(SUCCESS, regUser)) == RET_ERROR)
 			Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
 
 		free(regUser);
-		return;
+    }
+    while(0);
+
+    if (ret != RET_OK)
+	{
+		Log(LOGGERFILENAME, "CONTR_ERROR", errorMessage);
+
+		if(Send(socket, JsonSendErrorMessage(ERROR, sendMessage)) == RET_ERROR)
+				Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
 	}
-
-	Log(LOGGERFILENAME, "CONTR_ERROR", "Registration failed");
-
-	if(!Send(socket, JsonSendErrorMessage(ERROR, "Cannot find registered user")))
-		Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
-	return;
 }
 
-void LogIn(int socket, User* client)
+void LogIn(int socket, const char* message)
 {
-	if(!CheckCorrectness(socket, client))
-		return;
+	char sendMessage[MAXMESSAGESIZE];
+	char errorMessage[ERRORMESSAGESIZE];
+	ret_t ret = RET_OK;
+    do
+    {
+    	ret = ConnectToDB();
+    	if(ret == RET_ERROR)
+		{
+			strcpy(errorMessage, "Cannot connect to database");
+    		strcpy(sendMessage, "Cannot register user");
+			break; 
+		}
 
-	if(!ConnectToDB())
-	{
-		Log(LOGGERFILENAME, "CONTR_ERROR", "Cannot connect to database");
-		return;
-	}
+    	User* client = JsonGetUser(message);
+    	if(client == NULL)
+    	{
+    		strcpy(errorMessage, "Parse user failed");
+    		strcpy(sendMessage, "Cannot get user data");
+			ret = RET_ERROR;
+			break; 
+    	}
+    	ret = CheckCorrectness(socket, client);
+		if(ret == RET_ERROR)
+		{
+			strcpy(errorMessage, "Incorrect user info");
+    		strcpy(sendMessage, "Incorrect user info");
+			break; 
+		}
 
-	User* logUser = GetUserByName(client->login);
-	if(logUser == NULL)
-	{
-		Log(LOGGERFILENAME, "CONTR_INFO", "Log in failed");
+		User* logUser = GetUserByName(client->login);
+		if(logUser == NULL)
+		{
+			char name[DATASIZE];
+			strcpy(name, client->login);
+			strcpy(sendMessage, "No user with name ");
+			strcat(sendMessage, name);
+			strcpy(errorMessage, "Log in failed");
 
-		char name[DATASIZE];
-		char message[MAXMESSAGESIZE];
-		strcpy(name, client->login);
-		strcpy(message, "No user with name ");
-		strcat(message, name);
+			ret = RET_ERROR;
+			break;
+		}
+		
+		if(strcmp(client->password, logUser->password) != 0)
+		{
+			strcpy(sendMessage, "Incorrect password");
+			free(logUser);
+			strcpy(errorMessage, "Log in failed");
+			ret = RET_ERROR;
+			break;
+		}
 
-		if(!Send(socket, JsonSendErrorMessage(ERROR, message)))
-			Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
-		return;
-	}
-	if(strcmp(client->password, logUser->password) == 0)
-	{
 		userID = logUser->id;
 		Log(LOGGERFILENAME, "CONTR_INFO", "Log in completed successfully");
 		
-		if(!Send(socket, JsonSendUser(SUCCESS, logUser)))
+		if(Send(socket, JsonSendUser(SUCCESS, logUser)) == RET_ERROR)
 			Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
 
 		free(logUser);
-		return;
-	}
-	free(logUser);
-	Log(LOGGERFILENAME, "CONTR_INFO", "Log in failed");
+    }
+    while(0);
 
-	if(!Send(socket, JsonSendErrorMessage(ERROR, "Incorrect password")))
-		Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
-	return;
+    if (ret != RET_OK)
+	{
+		Log(LOGGERFILENAME, "CONTR_ERROR", errorMessage);
+
+		if(Send(socket, JsonSendErrorMessage(ERROR, sendMessage)) == RET_ERROR)
+				Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
+	}
 }
 
-void GetClientData(int socket, Data* data)
+void GetClientData(int socket, const char* message)
 {
-	if(!CheckUserId(data->userId, socket))
-		return;
+	Data* data = JsonGetData(message);
+	if(data == NULL)
+	{
+		Log(LOGGERFILENAME, "JSON_ERROR", "Parse data failed");
 
-	if(!Send(socket, JsonSendSuccessMessage(SUCCESS)))
+		if(Send(socket, JsonSendErrorMessage(ERROR, "Cannot get user data")) == RET_ERROR)
+				Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
+		return; 
+	}
+
+	if(userID != data->userId)
+	{
+		Log(LOGGERFILENAME, "CONTR_ERROR", "Get client data failed, incorrect id");
+
+		if(Send(socket, JsonSendErrorMessage(ERROR, "Incorrect user id. You hasn't logged in yet")) == RET_ERROR)
+			Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
+		return;
+	}
+
+	if(Send(socket, JsonSendSuccessMessage(SUCCESS)) == RET_ERROR)
 		Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
 	Log(LOGGERFILENAME, "CONTR_INFO", "Get data from user successfully");
 
-	JsonWriteGPSInfoWithId(JSONFILENAME, data);
+	if(JsonWriteGPSInfoWithId(JSONFILENAME, data) == RET_ERROR)
+		Log(LOGGERFILENAME, "JSON_ERROR", "Write data to json failed");
+	else
+		Log(LOGGERFILENAME, "JSON_INFO", "Write data to json successfully");
 }
 
 int CheckCorrectness(int socket, User* user)
 {
+	ret_t ret = RET_OK;
 	if(!(user->login != NULL && user->login != "" && user->password != NULL && user->password != ""))
 	{
-		Log(LOGGERFILENAME, "CONTR_ERROR", "Incorrect user info");
-		if(!Send(socket, JsonSendErrorMessage(ERROR, "Incorrect user info")))
-			Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
-		return 0;
+		ret = RET_ERROR;
 	}
-	return 1;
-}
-
-int CheckUserId(int id, int socket)
-{
-	if(userID != id)
-	{
-		Log(LOGGERFILENAME, "CONTR_INFO", "Get client data failed, incorrect id");
-
-		if(!Send(socket, JsonSendErrorMessage(ERROR, "Incorrect user id. You hasn't logged in yet")))
-			Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
-		return 0;
-	}
-	return 1;
+	return ret;
 }

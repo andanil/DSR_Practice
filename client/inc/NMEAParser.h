@@ -7,6 +7,7 @@
 #include "GPSInfo.h"
 #include "ClientConf.h"
 #include "Logger.h"
+#include "conf.h"
 
 GPSInfo* ParseRMCString(char* string);
 

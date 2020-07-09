@@ -6,7 +6,6 @@
 #include "ServerConf.h"
 
 #define MAXCLIENT 10
-#define NO_ERROR 0
 
 typedef struct
 {

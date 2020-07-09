@@ -9,6 +9,7 @@
 #include "UserList.h"
 #include "Logger.h"
 #include "ServerConf.h"
+#include "conf.h"
 
 #define SERVER "localhost"
 #define USER "gps_user"

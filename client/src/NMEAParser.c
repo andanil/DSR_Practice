@@ -11,7 +11,7 @@ void DeleteChars(char* array, int count);
 
 GPSInfo* ParseRMCString(char* string)
 {
-	if(!GetNextItem(string))
+	if(GetNextItem(string) == RET_ERROR)
 		return NULL;
 	if(strcmp(item, "$GPRMC") != 0)
 	{
@@ -36,21 +36,21 @@ GPSInfo* ParseRMCString(char* string)
 
 void ParseChars(char* string, char* inf)
 {
-	if(!GetNextItem(string))
+	if(GetNextItem(string) == RET_ERROR)
 		strcpy(inf, "NULL");
 	strcpy(inf, item);
 }
 
 void ParseChar(char* string, char* inf)
 {
-	if(!GetNextItem(string))
+	if(GetNextItem(string) == RET_ERROR)
 		strcpy(inf, "\n");
 	strcpy(inf, item);
 }
 
 void ParseDouble(char* string, double* inf)
 {
-	if(!GetNextItem(string))
+	if(GetNextItem(string) == RET_ERROR)
 		*inf = NAN;
 	*inf = atof(item);
 }
@@ -64,11 +64,11 @@ int GetNextItem(char* array)
 	if(!count)
 	{
 		DeleteChars(array, 1);
-		return 0;
+		return RET_ERROR;
 	}
 	strncpy(item, array, count);
 	DeleteChars(array, count+1);
-	return 1;
+	return RET_OK;
 }
 
 void DeleteChars(char* array, int count)

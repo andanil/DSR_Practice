@@ -10,6 +10,7 @@
 #include <stddef.h>
 #include "User.h"
 #include "GPSInfo.h"
+#include "conf.h"
 
 #define MAXMESSAGESIZE 1024
 

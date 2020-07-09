@@ -17,7 +17,7 @@ int StartTCPServer(int port)
     	Log(LOGGERFILENAME, "TCP_ERROR", "Socket failed");
         return -1;
     } 
-    int retCode = NO_ERROR;
+    int retCode = RET_OK;
     do
     {
     	retCode = setsockopt(server, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt));
@@ -43,7 +43,7 @@ int StartTCPServer(int port)
     }
     while(0);
 
-    if (retCode != NO_ERROR)
+    if (retCode != RET_OK)
 	{
 	  	return -1;
 	}
@@ -53,6 +53,7 @@ int StartTCPServer(int port)
 
 int Accept(int server)
 {
+	ret_t ret = RET_OK;
 	struct sockaddr_in address;
 	socklen_t addrlen = sizeof(address);
 	SocketDescr* socketDescr = (SocketDescr*)malloc(sizeof(SocketDescr));
@@ -62,7 +63,7 @@ int Accept(int server)
 	{
 		Log(LOGGERFILENAME, "TCP_ERROR", "Accept failed");
 		free(socketDescr);
-		return 0;
+		ret = RET_ERROR;
 	}
 	else
 	{
@@ -70,7 +71,7 @@ int Accept(int server)
 		LogMessageWithIP("Client has been accepted, ip ", socketDescr->ip);
 
 		int running = IsAvailableClient(socketDescr->socket);
-		while(running)
+		while(running == RET_OK)
 		{
 			LogMessageWithIP("Client is available, ip ", socketDescr->ip);
 			RunThreadApp(socketDescr->ip, socketDescr->socket);
@@ -85,8 +86,8 @@ int Accept(int server)
 		/*pthread_t thread;
 		pthread_create(&thread, 0, ConnectionHandler, (void *)socketDescr);
 		pthread_detach(thread);*/
-		return 1;
 	}
+	return ret;
 }
 
 void *ConnectionHandler(void *ptr)
@@ -101,8 +102,9 @@ void *ConnectionHandler(void *ptr)
 
 	Log(LOGGERFILENAME, "TCP_INFO", "Thread created");
 	socketDescr = (SocketDescr *)ptr;
-	int running = 1;
-	while(running)
+
+	int running = IsAvailableClient(socketDescr->socket);
+	while(running == RET_OK)
 	{
 		LogMessageWithIP("Client is available, ip ", socketDescr->ip);
 		RunThreadApp(socketDescr->ip, socketDescr->socket);
@@ -117,11 +119,12 @@ void *ConnectionHandler(void *ptr)
 
 int IsAvailableClient(int socket)
 {
+	ret_t ret = RET_ERROR;
 	char buffer;
 	int result = recv(socket, &buffer, 1, MSG_PEEK);
 	if (result > 0)
-		return 1;
-	return 0;
+		ret = RET_OK;
+	return ret;
 }
 
 void LogMessageWithIP(const char* mess, const char* ip)

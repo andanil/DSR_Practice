@@ -12,17 +12,17 @@ void RunThreadApp(const char* ip, int socket)
 	{
 		case SINGIN:
 		{
-			RegisterClient(socket, JsonGetUser(message));
+			RegisterClient(socket, message);
 			break;
 		}
 		case LOGIN:
 		{
-			LogIn(socket, JsonGetUser(message));
+			LogIn(socket, message);
 			break;
 		}
 		case DATA:
 		{
-			GetClientData(socket, JsonGetData(message));
+			GetClientData(socket, message);
 			break;
 		}
 	}

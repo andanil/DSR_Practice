@@ -14,7 +14,7 @@ int main(int argc, char const *argv[])
     
     while(1)
     {
-        if(!Accept(server))
+        if(Accept(server) == RET_ERROR)
             printf("Accept failed\n");
     }
     close(server);
