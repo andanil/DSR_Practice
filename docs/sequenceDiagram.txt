@@ -1,0 +1,69 @@
+@startuml
+== Registration ==
+Client->Server : signin message
+activate Server
+note left: Send user's info.
+
+Server->Server : Check user's info
+
+Server-->Client : error message
+note right
+If invalid user's info has been received, 
+server sends error message.
+end note
+
+Server-->Client : success message
+note right
+Server has received correct user's info.
+Server registers user and sends user's id.
+end note
+
+deactivate Server
+
+== Authorization ==
+Client->Server : login message
+activate Server
+note left: Send user's info.
+
+Server->Server : Check user's info
+
+Server-->Client : error message
+note right
+If invalid user's info has been received, 
+server sends error message.
+end note
+
+Server->Server : Check user's password
+
+Server-->Client : error message
+note right
+If incorrect password has been received, 
+server sends error message
+end note
+
+Server-->Client : success message
+note right
+Server has received correct user's info.
+Server sends user's id.
+end note
+
+deactivate Server
+
+== Sending user's coordinates ==
+Client->Server : data message
+activate Server
+note left: Send user's coordinates with user's id.
+
+Server->Server : Check user's id
+
+Server-->Client : error message
+note right
+If user has not been authorized yet, 
+server sends error message.
+end note
+
+Server-->Client : success message
+note right : Server has reсeived user's coordinates.
+
+deactivate Server
+@enduml

@@ -15,7 +15,7 @@ GPSInfo* ParseRMCString(char* string)
 		return NULL;
 	if(strcmp(item, "$GPRMC") != 0)
 	{
-		Log(LOGGERFILENAME, "RMCPARSER_INFO", "Not RMC string");
+		//Log(LOGGERFILENAME, "RMCPARSER_INFO", "Not RMC string");
 		return NULL;
 	}
 	ParseChars(string, data.time);
@@ -41,7 +41,7 @@ void ParseChars(char* string, char* inf)
 		strcpy(inf, "");
 		return;
 	}
-	strcpy(inf, item);	
+	strcpy(inf, item);
 }
 
 void ParseChar(char* string, char* inf)

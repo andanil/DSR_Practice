@@ -1,0 +1,9 @@
+test/TestNMEAParser.c:86:TestFullString:PASS
+test/TestNMEAParser.c:87:TestStringWithEmptyDouble:PASS
+test/TestNMEAParser.c:88:TestStringWithEmptyChars:PASS
+test/TestNMEAParser.c:89:TestAnotherTypeOfString:PASS
+test/TestNMEAParser.c:90:TestEmptyString:PASS
+
+-----------------------
+5 Tests 0 Failures 0 Ignored 
+OK
