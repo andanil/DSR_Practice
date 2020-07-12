@@ -23,3 +23,42 @@
 2020-07-09 10:08:15 CONTR_INFO Get data from user successfully
 2020-07-09 10:08:15 JSON_INFO Write data to json successfully
 2020-07-09 10:08:19 TCP_INFO Client is not available, ip 127.0.0.1
+2020-07-11 18:20:58 TCP_INFO Server listening
+2020-07-11 18:22:15 TCP_INFO Client has been accepted, ip 127.0.0.1
+2020-07-11 18:22:19 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-11 18:22:19 CONTR_INFO Log in completed successfully
+2020-07-11 18:22:25 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-11 18:22:25 CONTR_INFO Get data from user successfully
+2020-07-11 18:22:25 JSON_INFO Write data to json successfully
+2020-07-11 18:22:26 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-11 18:22:26 CONTR_INFO Get data from user successfully
+2020-07-11 18:22:26 JSON_INFO Write data to json successfully
+2020-07-11 18:22:27 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-11 18:22:27 CONTR_INFO Get data from user successfully
+2020-07-11 18:22:27 JSON_INFO Write data to json successfully
+2020-07-11 18:22:33 TCP_INFO Client is not available, ip 127.0.0.1
+2020-07-11 18:40:08 TCP_INFO Server listening
+2020-07-11 18:40:10 TCP_INFO Client has been accepted, ip 127.0.0.1
+2020-07-11 18:40:43 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-11 18:40:43 CONTR_INFO Registration completed successfully
+2020-07-11 18:40:54 TCP_INFO Client is not available, ip 127.0.0.1
+2020-07-11 18:40:55 TCP_INFO Client has been accepted, ip 127.0.0.1
+2020-07-11 18:40:59 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-11 18:40:59 CONTR_INFO Log in completed successfully
+2020-07-11 18:41:07 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-11 18:41:07 CONTR_INFO Get data from user successfully
+2020-07-11 18:41:07 JSON_INFO Write data to json successfully
+2020-07-11 18:41:08 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-11 18:41:08 CONTR_INFO Get data from user successfully
+2020-07-11 18:41:08 JSON_INFO Write data to json successfully
+2020-07-11 18:41:09 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-11 18:41:09 CONTR_INFO Get data from user successfully
+2020-07-11 18:41:09 JSON_INFO Write data to json successfully
+2020-07-11 18:41:10 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-11 18:41:10 CONTR_INFO Get data from user successfully
+2020-07-11 18:41:10 JSON_INFO Write data to json successfully
+2020-07-11 18:41:11 TCP_INFO Client is not available, ip 127.0.0.1
+2020-07-11 18:41:11 TCP_INFO Client has been accepted, ip 127.0.0.1
+2020-07-11 18:41:27 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-11 18:41:27 CONTR_ERROR Log in failed
+2020-07-11 18:41:31 TCP_INFO Client is not available, ip 127.0.0.1

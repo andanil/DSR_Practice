@@ -1,0 +1,40 @@
+@startuml
+start
+partition Initialization {
+  :initialize TCP сlient;
+  if(error) then(yes)
+    stop
+  endif    
+  :connect to server;
+  if(cannot connect to server) then(yes)
+    stop
+  endif    
+}
+
+partition Authorization {
+  repeat:get user's login and password;
+  :send login message to server;
+  :receive server's answer;
+  backward: view error message;
+  repeat while (error message?) is(yes)
+  :get user's id from received message;
+}
+
+partition Running {
+while(run application?) is(yes)
+  fork
+    :generate NMEA strings;
+  fork again
+    :get NMEA string;
+    :parse NMEA string;
+    :save data to json;
+    if(send data to server?) then(yes)
+      repeat
+        :send data message;
+      repeat while (receive error message from server)
+    endif    
+  end fork
+endwhile
+}
+stop
+@enduml

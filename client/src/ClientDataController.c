@@ -4,6 +4,7 @@ extern int run;
 extern int sendToServer;
 
 void *DataSendingHandler(void *ptr);
+void ResendUserData(int socket, GPSInfo* data);
 
 void RunDataSending(int socket)
 {
@@ -55,10 +56,25 @@ void *DataSendingHandler(void *ptr)
     			{
 				    if(SendUserData(socket, data) == RET_OK)
 				    	Log(LOGGERFILENAME, "SRVCON_INFO", "Sent data successfully");
+				    else
+				    	ResendUserData(socket, data);
     			}
 			}
 		}
 	}
 
 	pthread_exit(0);
+}
+
+void ResendUserData(int socket, GPSInfo* data)
+{
+	int count = 0;
+	int send = RET_ERROR;
+	while(count < REPEATNUM && send == RET_ERROR)
+	{	
+		send = SendUserData(socket, data);
+		if(send == RET_OK)
+	    	Log(LOGGERFILENAME, "SRVCON_INFO", "Sent data successfully");
+	    count++;
+	}
 }

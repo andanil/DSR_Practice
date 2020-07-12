@@ -27,3 +27,64 @@
 2020-07-09 10:08:17 JSON_INFO Write data to json successfully
 2020-07-09 10:08:18 JSON_INFO Write data to json successfully
 2020-07-09 10:08:19 TCP_INFO TCP client closing
+2020-07-11 18:22:15 TCP_INFO TCP client initialization
+2020-07-11 18:22:15 TCP_INFO Connecting to server
+2020-07-11 18:22:15 TCP_INFO Connect to server successfully
+2020-07-11 18:22:19 SRVCON_INFO Authorization completed successfully
+2020-07-11 18:22:20 JSON_INFO Write data to json successfully
+2020-07-11 18:22:21 JSON_INFO Write data to json successfully
+2020-07-11 18:22:22 JSON_INFO Write data to json successfully
+2020-07-11 18:22:23 JSON_INFO Write data to json successfully
+2020-07-11 18:22:24 JSON_INFO Write data to json successfully
+2020-07-11 18:22:25 APP_INFO Set value True to sendToServer parameter
+2020-07-11 18:22:25 JSON_INFO Write data to json successfully
+2020-07-11 18:22:25 SRVCON_INFO Sent data successfully
+2020-07-11 18:22:26 JSON_INFO Write data to json successfully
+2020-07-11 18:22:26 SRVCON_INFO Sent data successfully
+2020-07-11 18:22:27 JSON_INFO Write data to json successfully
+2020-07-11 18:22:27 SRVCON_INFO Sent data successfully
+2020-07-11 18:22:28 APP_INFO Set value False to sendToServer parameter
+2020-07-11 18:22:28 JSON_INFO Write data to json successfully
+2020-07-11 18:22:29 JSON_INFO Write data to json successfully
+2020-07-11 18:22:30 JSON_INFO Write data to json successfully
+2020-07-11 18:22:31 JSON_INFO Write data to json successfully
+2020-07-11 18:22:32 JSON_INFO Write data to json successfully
+2020-07-11 18:22:33 TCP_INFO TCP client closing
+2020-07-11 18:40:10 TCP_INFO TCP client initialization
+2020-07-11 18:40:10 TCP_INFO Connecting to server
+2020-07-11 18:40:10 TCP_INFO Connect to server successfully
+2020-07-11 18:40:28 SRVCON_ERROR Registration failed
+2020-07-11 18:40:43 SRVCON_INFO Registration completed successfully
+2020-07-11 18:40:48 JSON_INFO Write data to json successfully
+2020-07-11 18:40:49 JSON_INFO Write data to json successfully
+2020-07-11 18:40:50 JSON_INFO Write data to json successfully
+2020-07-11 18:40:51 JSON_INFO Write data to json successfully
+2020-07-11 18:40:52 JSON_INFO Write data to json successfully
+2020-07-11 18:40:53 JSON_INFO Write data to json successfully
+2020-07-11 18:40:54 TCP_INFO TCP client closing
+2020-07-11 18:40:55 TCP_INFO TCP client initialization
+2020-07-11 18:40:55 TCP_INFO Connecting to server
+2020-07-11 18:40:55 TCP_INFO Connect to server successfully
+2020-07-11 18:40:59 SRVCON_INFO Authorization completed successfully
+2020-07-11 18:41:00 JSON_INFO Write data to json successfully
+2020-07-11 18:41:01 JSON_INFO Write data to json successfully
+2020-07-11 18:41:02 JSON_INFO Write data to json successfully
+2020-07-11 18:41:03 JSON_INFO Write data to json successfully
+2020-07-11 18:41:04 JSON_INFO Write data to json successfully
+2020-07-11 18:41:05 JSON_INFO Write data to json successfully
+2020-07-11 18:41:06 JSON_INFO Write data to json successfully
+2020-07-11 18:41:06 APP_INFO Set value True to sendToServer parameter
+2020-07-11 18:41:07 JSON_INFO Write data to json successfully
+2020-07-11 18:41:07 SRVCON_INFO Sent data successfully
+2020-07-11 18:41:08 JSON_INFO Write data to json successfully
+2020-07-11 18:41:08 SRVCON_INFO Sent data successfully
+2020-07-11 18:41:09 JSON_INFO Write data to json successfully
+2020-07-11 18:41:09 SRVCON_INFO Sent data successfully
+2020-07-11 18:41:10 JSON_INFO Write data to json successfully
+2020-07-11 18:41:10 SRVCON_INFO Sent data successfully
+2020-07-11 18:41:10 TCP_INFO TCP client closing
+2020-07-11 18:41:11 TCP_INFO TCP client initialization
+2020-07-11 18:41:11 TCP_INFO Connecting to server
+2020-07-11 18:41:11 TCP_INFO Connect to server successfully
+2020-07-11 18:41:27 SRVCON_ERROR Authorization failed
+2020-07-11 18:41:31 TCP_INFO TCP client closing

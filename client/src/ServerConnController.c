@@ -10,7 +10,6 @@ const char* Register(int socket, const char* login, const char* password, const 
 		return "Password mismatch";
 	strcpy(user.login, login);
 	strcpy(user.password, password);
-
 	if(Send(socket, JsonSendUser(SINGIN, &user)) == RET_ERROR)
 	{
 		Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");

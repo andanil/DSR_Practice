@@ -9,6 +9,8 @@
 #include "NMEAParser.h"
 #include "JsonParser.h"
 
+#define REPEATNUM 3
+
 void RunDataSending(int socket);
 
 #endif

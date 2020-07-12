@@ -1,0 +1,43 @@
+@startuml
+start
+:initialize TCP server;
+if(error) then(yes)
+  stop
+endif    
+:accept client;
+
+while(client is available) is(yes)
+  :receive message from client;
+  if(signin message) then(yes)
+    if(cannot connect to database or
+empty login/password field or
+user with received name already exists) then(yes)
+       :send error message;
+    else(no)
+      :register new user;
+      :send success message with user's id;
+    endif
+  
+  elseif(login message) then(yes)
+    if(cannot connect to database or
+empty login/password field or
+there is no user with received login or
+incorrect password) then(yes)
+       :send error message;
+    else(no)
+      :log in user;
+      :send success message with user's id;
+    endif
+
+  elseif(data message) then(yes)
+    if(user has been authorized yet) then(yes)
+      :send success message;
+      :save user's coordinates;
+    else(no)
+      :send error message;      
+    endif
+  endif
+endwhile
+
+stop
+@enduml
