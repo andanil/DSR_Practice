@@ -6,7 +6,7 @@ partition Initialization {
     stop
   endif    
   :connect to server;
-  if(cannot connect to server) then(yes)
+  if(cannot connect to server?) then(yes)
     stop
   endif    
 }
@@ -21,7 +21,7 @@ partition Authorization {
 }
 
 partition Running {
-while(run application?) is(yes)
+while(continue running application?) is(yes)
   fork
     :generate NMEA strings;
   fork again
@@ -29,9 +29,8 @@ while(run application?) is(yes)
     :parse NMEA string;
     :save data to json;
     if(send data to server?) then(yes)
-      repeat
-        :send data message;
-      repeat while (receive error message from server)
+      repeat:send data message;
+      repeat while (receive error message from server?)
     endif    
   end fork
 endwhile

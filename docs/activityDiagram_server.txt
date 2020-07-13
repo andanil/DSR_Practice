@@ -6,7 +6,7 @@ if(error) then(yes)
 endif    
 :accept client;
 
-while(client is available) is(yes)
+while(is client available?) is(yes)
   :receive message from client;
   if(signin message) then(yes)
     if(cannot connect to database or
@@ -30,7 +30,7 @@ incorrect password) then(yes)
     endif
 
   elseif(data message) then(yes)
-    if(user has been authorized yet) then(yes)
+    if(has user been authorized yet?) then(yes)
       :send success message;
       :save user's coordinates;
     else(no)

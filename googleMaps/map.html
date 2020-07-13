@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8-W6YkkDtBbI10nkJV69oNlojx_tm57A&callback=initMap&libraries=&v=weekly"
+      defer
+    ></script>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <script src="./app.js"></script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <input type="file" name="inputfile" id="inputfile">
+    <script type="text/javascript"> 
+      document.getElementById('inputfile').addEventListener('change', function() {          
+        var fr = new FileReader(); 
+        fr.onload = function(){ 
+            viewData(fr.result); 
+        } 
+          
+        fr.readAsText(this.files[0]); 
+      }) 
+    </script> 
+  </body>
+</html>
