@@ -21,7 +21,7 @@ partition Authorization {
 }
 
 partition Running {
-while(continue running application?) is(yes)
+while(is user logged in?) is(yes)
   fork
     :generate NMEA strings;
   fork again

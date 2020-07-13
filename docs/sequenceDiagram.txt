@@ -44,7 +44,7 @@ end note
 Server-->Client : success message
 note right
 Server has received correct user's info.
-Server sends user's id.
+Server authorizes user and sends user's id.
 end note
 
 deactivate Server
@@ -64,6 +64,23 @@ end note
 
 Server-->Client : success message
 note right : Server has reсeived user's coordinates.
+
+deactivate Server
+
+== Log out ==
+Client->Server : logout message
+activate Server
+note left: Send user's info.
+
+Server->Server : Check user's info
+
+Server-->Client : error message
+note right
+If user has not been authorized, 
+server sends error message.
+end note
+
+Server-->Client : success message
 
 deactivate Server
 @enduml

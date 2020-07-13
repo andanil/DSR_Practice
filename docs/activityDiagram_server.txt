@@ -36,6 +36,15 @@ incorrect password) then(yes)
     else(no)
       :send error message;      
     endif
+
+  elseif(logout message) then(yes)
+    if(empty login/password field or
+user has not been authorized) then(yes)
+       :send error message;
+    else(no)
+      :log out user;
+      :send success message;
+    endif
   endif
 endwhile
 
