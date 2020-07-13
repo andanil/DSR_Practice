@@ -1,6 +1,7 @@
 #include "ClientView.h"
 
 int run;
+int generateCoord;
 int sendToServer;
 User user;
 
@@ -9,6 +10,7 @@ void AuthMenu(int socket);
 void UnauthMenu(int socket);
 void RegisterView(int socket);
 void LogInView(int socket);
+void LogOutView(int socket);
 void SetAutoLogIn();
 void SettingsMenu();
 int LogInResView(const char* res, int socket);
@@ -34,7 +36,8 @@ void RunApp(const char* ip, int port)
 
     user.id = -1;
     sendToServer = 0;
-    run = 1;
+    run = ON;
+    generateCoord = OFF;
     
     while(run)
         MainMenu(socket);
@@ -58,7 +61,8 @@ void AuthMenu(int socket)
 	printf("\nYou have logged in as %s\n", user.login); 
 	printf("Choose command:\n"); 
     printf("1.Settings\n"); 
-    printf("2.Exit\n"); 
+    printf("2.Log out\n"); 
+    printf("3.Exit\n"); 
 
     int command;
     if(scanf("%d", &command)) 
@@ -70,9 +74,14 @@ void AuthMenu(int socket)
              	SettingsMenu();   
                 break;
             }
+            case LOG_OUT:
+            {
+                LogOutView(socket);
+                break;
+            }
             case EXIT:
             {
-                run = 0;
+                run = OFF;
                 break;
             }
             default:
@@ -111,7 +120,7 @@ void UnauthMenu(int socket)
             }
             case EXIT_PROG:
             {
-                run = 0;
+                run = OFF;
                 break;
             }
             default:
@@ -158,6 +167,18 @@ void LogInView(int socket)
 
 	if(LogInResView(LogIn(socket, name, password), socket) == RET_OK)
         SetAutoLogIn();
+}
+
+void LogOutView(int socket)
+{
+    const char* res = LogOut(socket);
+    if(strcmp(res, "Success") != 0)
+    {
+        Log(LOGGERFILENAME, "SRVCON_ERROR", "Log out failed");
+        printf("%s\n", res);
+    }
+    generateCoord = OFF;
+    Log(LOGGERFILENAME, "SRVCON_INFO", "Log out completed successfully");
 }
 
 void SetAutoLogIn()

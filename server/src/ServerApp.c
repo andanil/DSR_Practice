@@ -25,5 +25,10 @@ void RunThreadApp(const char* ip, int socket)
 			GetClientData(socket, message);
 			break;
 		}
+		case LOGOUT:
+		{
+			LogOut(socket, message);
+			break;
+		}
 	}
 }

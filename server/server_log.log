@@ -62,3 +62,25 @@
 2020-07-11 18:41:27 TCP_INFO Client is available, ip 127.0.0.1
 2020-07-11 18:41:27 CONTR_ERROR Log in failed
 2020-07-11 18:41:31 TCP_INFO Client is not available, ip 127.0.0.1
+2020-07-13 20:14:20 TCP_INFO Server listening
+2020-07-13 20:14:30 TCP_INFO Client has been accepted, ip 127.0.0.1
+2020-07-13 20:14:32 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-13 20:14:33 CONTR_INFO Log in completed successfully
+2020-07-13 20:14:37 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-13 20:14:37 CONTR_INFO Log out completed successfully
+2020-07-13 20:14:48 TCP_INFO Client is not available, ip 127.0.0.1
+2020-07-13 20:19:42 TCP_INFO Server listening
+2020-07-13 20:20:02 TCP_INFO Client has been accepted, ip 127.0.0.1
+2020-07-13 20:20:04 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-13 20:20:04 CONTR_ERROR Log in failed
+2020-07-13 20:20:13 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-13 20:20:13 CONTR_INFO Log in completed successfully
+2020-07-13 20:20:17 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-13 20:20:17 CONTR_INFO Log out completed successfully
+2020-07-13 20:20:19 TCP_INFO Client is not available, ip 127.0.0.1
+2020-07-13 20:25:24 TCP_INFO Client has been accepted, ip 127.0.0.1
+2020-07-13 20:25:27 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-13 20:25:27 CONTR_INFO Log in completed successfully
+2020-07-13 20:25:32 TCP_INFO Client is available, ip 127.0.0.1
+2020-07-13 20:25:32 CONTR_INFO Log out completed successfully
+2020-07-13 20:25:39 TCP_INFO Client is not available, ip 127.0.0.1

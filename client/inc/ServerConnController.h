@@ -13,6 +13,7 @@
 const char* Register(int socket, const char* login, const char* password, const char* confPassword);
 const char* LogIn(int socket, const char* login, const char* password);
 const char* AutoLogIn(int socket);
+const char* LogOut(int socket);
 int SendUserData(int socket, GPSInfo* data);
 
 #endif

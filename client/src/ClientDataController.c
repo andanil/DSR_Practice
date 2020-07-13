@@ -1,6 +1,6 @@
 #include "ClientDataController.h"
 
-extern int run;
+extern int generateCoord;
 extern int sendToServer;
 
 void *DataSendingHandler(void *ptr);
@@ -8,6 +8,7 @@ void ResendUserData(int socket, GPSInfo* data);
 
 void RunDataSending(int socket)
 {
+	generateCoord = ON;
 	pthread_t thread;
 	int *arg = malloc(sizeof(*arg));
 	*arg = socket;
@@ -30,7 +31,7 @@ void *DataSendingHandler(void *ptr)
 		case 0:
 		{
 			close(fd[0]);
-			while(run)
+			while(generateCoord)
 			{
 				sleep(PERIOD);
 				write(fd[1], GetRMCString(), NMEAMESSAGESIZE);
@@ -42,7 +43,7 @@ void *DataSendingHandler(void *ptr)
 			close(fd[1]);
 			int socket = *((int*) ptr);
 			free(ptr);
-			while(run)
+			while(generateCoord)
 			{
 				char message[NMEAMESSAGESIZE];
 				read(fd[0], message, NMEAMESSAGESIZE);

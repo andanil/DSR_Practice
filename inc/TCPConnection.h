@@ -16,7 +16,7 @@
 
 typedef enum
 {
-	SINGIN, LOGIN, DATA, SUCCESS, ERROR  
+	SINGIN, LOGIN, DATA, LOGOUT, SUCCESS, ERROR 
 
 } MessageType;
 

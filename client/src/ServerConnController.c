@@ -48,6 +48,27 @@ const char* AutoLogIn(int socket)
 	return Login(socket);
 }
 
+const char* LogOut(int socket)
+{
+	if(Send(socket, JsonSendUser(LOGOUT, &user)) == RET_ERROR)
+	{
+		Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
+		return "Cannot send data";
+	}
+
+	const char* message = Read(socket);
+	if(message == NULL)
+	{
+		Log(LOGGERFILENAME, "TCP_ERROR", "Read failed");
+		return "Cannot receive data";
+	}
+	if(JsonGetMessageType(message) == ERROR)
+		return JsonGetErrorMessage(message);
+
+	user.id = -1;
+	return "Success";
+}
+
 int SendUserData(int socket, GPSInfo* data)
 {
 	if(Send(socket, JsonSendGPSInfo(DATA, user.id, data)) == RET_ERROR)

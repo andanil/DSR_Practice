@@ -12,5 +12,6 @@
 void RegisterClient(int socket, const char* message);
 void LogIn(int socket, const char* message);
 void GetClientData(int socket, const char* message);
+void LogOut(int socket, const char* message);
 
 #endif

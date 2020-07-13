@@ -190,6 +190,53 @@ void GetClientData(int socket, const char* message)
 		Log(LOGGERFILENAME, "JSON_INFO", "Write data to json successfully");
 }
 
+void LogOut(int socket, const char* message)
+{
+	char sendMessage[MAXMESSAGESIZE];
+	char errorMessage[ERRORMESSAGESIZE];
+	ret_t ret = RET_OK;
+    do
+    {
+    	User* client = JsonGetUser(message);
+    	if(client == NULL)
+    	{
+    		strcpy(errorMessage, "Parse user failed");
+    		strcpy(sendMessage, "Cannot get user data");
+			ret = RET_ERROR;
+			break; 
+    	}
+    	ret = CheckCorrectness(socket, client);
+		if(ret == RET_ERROR)
+		{
+			strcpy(errorMessage, "Incorrect user info");
+    		strcpy(sendMessage, "Incorrect user info");
+			break; 
+		}
+
+		if(userID != client->id)
+		{
+			strcpy(errorMessage, "Incorrect client's id");
+    		strcpy(sendMessage, "Incorrect user id. You hasn't logged in");
+			break; 
+		}
+
+		userID = -1;
+		Log(LOGGERFILENAME, "CONTR_INFO", "Log out completed successfully");
+		
+		if(Send(socket, JsonSendSuccessMessage(SUCCESS)) == RET_ERROR)
+			Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
+    }
+    while(0);
+
+    if (ret != RET_OK)
+	{
+		Log(LOGGERFILENAME, "CONTR_ERROR", errorMessage);
+
+		if(Send(socket, JsonSendErrorMessage(ERROR, sendMessage)) == RET_ERROR)
+				Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
+	}
+}
+
 int CheckCorrectness(int socket, User* user)
 {
 	ret_t ret = RET_OK;
