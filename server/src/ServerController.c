@@ -184,10 +184,10 @@ void GetClientData(int socket, const char* message)
 		Log(LOGGERFILENAME, "TCP_ERROR", "Send failed");
 	Log(LOGGERFILENAME, "CONTR_INFO", "Get data from user successfully");
 
-	if(JsonWriteGPSInfoWithId(JSONFILENAME, data) == RET_ERROR)
-		Log(LOGGERFILENAME, "JSON_ERROR", "Write data to json failed");
+	if(InsertGPSData(data) == RET_ERROR)
+		Log(LOGGERFILENAME, "CONTR_INFO", "Save data to DB failed");
 	else
-		Log(LOGGERFILENAME, "JSON_INFO", "Write data to json successfully");
+		Log(LOGGERFILENAME, "CONTR_INFO", "Save data to DB successfully");
 }
 
 void LogOut(int socket, const char* message)

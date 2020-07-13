@@ -40,6 +40,54 @@ int InsertUserValue(User* user)
 	return ret;
 }
 
+int InsertGPSData(Data* data)
+{
+	ret_t ret = RET_OK;
+	char* query = (char*)malloc(MAXBUFFERSIZE*sizeof(char));
+	strcpy(query, "INSERT INTO Coordinates(UserId, Time, Status, Latitude, NorthOrSouth, Longitude, WestOrEast, Speed, Direction, Date, Declination, DecWestOrEast, ModeInd) VALUES(\"");
+	char id[sizeof(int)];
+	sprintf(id, "%d", data->userId);
+	strcat(query, id);
+	strcat(query, "\",\"");
+	strcat(query, data->data.time);
+	strcat(query, "\",\"");
+	strcat(query, data->data.status);
+	strcat(query, "\",\"");
+	char arr[sizeof(double)];
+	sprintf(arr, "%4.2f", data->data.latitude);
+	strcat(query, arr);
+	strcat(query, "\",\"");
+	strcat(query, data->data.northOrSouth);
+	strcat(query, "\",\"");
+	sprintf(arr, "%5.2f", data->data.longitude);
+	strcat(query, arr);
+	strcat(query, "\",\"");
+	strcat(query, data->data.westOrEast);
+	strcat(query, "\",\"");
+	sprintf(arr, "%2.2f", data->data.speed);
+	strcat(query, arr);
+	strcat(query, "\",\"");
+	sprintf(arr, "%2.2f", data->data.direction);
+	strcat(query, arr);
+	strcat(query, "\",\"");
+	strcat(query, data->data.date);
+	strcat(query, "\",\"");
+	sprintf(arr, "%1.2f", data->data.declination);
+	strcat(query, arr);
+	strcat(query, "\",\"");
+	strcat(query, data->data.decWestOrEast);
+	strcat(query, "\",\"");
+	strcat(query, data->data.modeInd);
+	strcat(query, "\")");
+	if(mysql_query(connection, query))
+	{
+		Log(LOGGERFILENAME, "SQL_ERROR", mysql_error(connection));
+		ret = RET_ERROR;
+	}
+	free(query);
+	return ret;
+}
+
 UserListNode* GetAllUsers()
 {
 	if(mysql_query(connection, "SELECT * FROM Users")) 

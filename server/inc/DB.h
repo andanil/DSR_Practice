@@ -10,6 +10,7 @@
 #include "Logger.h"
 #include "ServerConf.h"
 #include "conf.h"
+#include "TCPConnection.h"
 
 #define SERVER "localhost"
 #define USER "gps_user"
@@ -22,6 +23,7 @@ static int isConnected = 0;
 
 int ConnectToDB();
 int InsertUserValue(User* user);
+int InsertGPSData(Data* data);
 UserListNode* GetAllUsers();
 User* GetUserByName(const char* username);
 void CloseDB();
