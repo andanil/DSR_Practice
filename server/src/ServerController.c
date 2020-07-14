@@ -246,3 +246,46 @@ int CheckCorrectness(int socket, User* user)
 	}
 	return ret;
 }
+
+UserListNode* GetUsers()
+{
+	if(ConnectToDB() == RET_ERROR)
+	{
+		Log(LOGGERFILENAME, "DB_ERROR", "Cannot connect to database");
+		return NULL; 
+	}
+
+	UserListNode* users = GetAllUsers();
+	if(users == NULL)
+		Log(LOGGERFILENAME, "DB_ERROR", "Cannot get users");
+
+	return users;
+}
+
+int DeleteUser(int id)
+{
+	char message[ERRORMESSAGESIZE];
+	ret_t ret = RET_OK;
+    do
+    {
+    	ret = ConnectToDB();
+    	if(ret == RET_ERROR)
+		{
+			strcpy(message, "Cannot connect to database");
+			break; 
+		}
+
+		ret = DeleteUserById(id);
+		if(ret == RET_ERROR)
+		{
+			strcpy(message, "Cannot delete user");
+			break;
+		}
+    }
+    while(0);
+
+    if (ret != RET_OK)
+		Log(LOGGERFILENAME, "DB_ERROR", message);
+
+	return ret;
+}

@@ -104,3 +104,8 @@
 2020-07-13 23:30:50 CONTR_INFO Get data from user successfully
 2020-07-13 23:30:51 CONTR_INFO Write data to DB successfully
 2020-07-13 23:30:51 TCP_INFO Client is not available, ip 127.0.0.1
+2020-07-14 14:13:59 TCP_INFO Server listening
+2020-07-14 14:16:05 TCP_INFO Server listening
+2020-07-14 14:16:21 SRVCON_ERROR Deleting user completed successfully
+2020-07-14 14:20:59 TCP_INFO Server listening
+2020-07-14 14:21:14 SRVCON_ERROR Deleting user completed successfully

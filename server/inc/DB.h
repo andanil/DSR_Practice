@@ -23,6 +23,7 @@ static int isConnected = 0;
 
 int ConnectToDB();
 int InsertUserValue(User* user);
+int DeleteUserById(int id);
 int InsertGPSData(Data* data);
 UserListNode* GetAllUsers();
 User* GetUserByName(const char* username);

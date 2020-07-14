@@ -2,6 +2,8 @@
 #include <stdlib.h> 
 #include <unistd.h>
 #include "TCPServer.h"
+#include "ServerView.h"
+
 
 int main(int argc, char const *argv[]) 
 { 
@@ -11,7 +13,11 @@ int main(int argc, char const *argv[])
         printf("Can't start server\n");
         return 1;
     }
-    
+
+    pthread_t thread;
+    pthread_create(&thread, 0, MainMenu, NULL);
+    pthread_detach(thread);
+
     while(1)
     {
         if(Accept(server) == RET_ERROR)

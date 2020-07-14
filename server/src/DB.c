@@ -40,6 +40,26 @@ int InsertUserValue(User* user)
 	return ret;
 }
 
+int DeleteUserById(int id)
+{
+	ret_t ret = RET_OK;
+	char* query = (char*)malloc(MAXBUFFERSIZE*sizeof(char));
+	strcpy(query, "DELETE FROM Users WHERE Id=\"");
+	char data[sizeof(int)];
+	sprintf(data, "%d", id);
+	strcat(query, data);
+	strcat(query, "\"");
+
+	if(mysql_query(connection, query)) 
+	{
+		Log(LOGGERFILENAME, "SQL_ERROR", mysql_error(connection));
+		ret = RET_ERROR;
+	}
+
+	free(query);
+	return ret;
+}
+
 int InsertGPSData(Data* data)
 {
 	ret_t ret = RET_OK;
